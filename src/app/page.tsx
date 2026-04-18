@@ -1,14 +1,28 @@
 import Link from "next/link";
-import { getPlayerCount, getLeaderboard, getServerStats } from "@/lib/api";
-import { addCommas } from "@/lib/utils";
+import { getPlayerCount, getLeaderboard, getServerStats, getRecentScores, type RecentScore } from "@/lib/api";
+import { addCommas, parseMods, diffColor, timeAgo } from "@/lib/utils";
+import GradeImage from "@/components/GradeImage";
+
+function gradeColor(grade: string): string {
+  const g = grade.toUpperCase();
+  if (g === "XH" || g === "SSH") return "#c9d6e3";
+  if (g === "X"  || g === "SS")  return "#ffd700";
+  if (g === "SH")                 return "#c0c0c0";
+  if (g === "S")                  return "#a78bfa";
+  if (g === "A")                  return "#66bb6a";
+  if (g === "B")                  return "#4fc3f7";
+  if (g === "C")                  return "#ffca28";
+  return "#ef4444";
+}
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const [counts, serverStats, topPlayers] = await Promise.all([
+  const [counts, serverStats, topPlayers, recentScores] = await Promise.all([
     getPlayerCount(),
     getServerStats(),
     getLeaderboard(0, "pp", 10, 0),
+    getRecentScores(16),
   ]);
 
   return (
@@ -46,9 +60,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <div className="staff-section">
+      <hr className="section-divider" />
+
+      <div className="home-staff">
         <div className="container-main">
-          <div className="staff-section-header">Staff</div>
+          <div className="home-staff-header">Staff</div>
           <div className="staff-cards">
             <div className="staff-card">
               <div className="staff-avatar-wrap rainbow-border">
@@ -64,7 +80,10 @@ export default async function HomePage() {
         </div>
       </div>
 
+      <hr className="section-divider" />
+
       <div className="stats-strip-bg">
+
         <div className="stats-strip">
 
           <div className="stats-strip-cell" style={{ "--ac": "#3b82f6" } as React.CSSProperties}>
@@ -129,6 +148,8 @@ export default async function HomePage() {
 
         </div>
       </div>
+
+      <hr className="section-divider" />
 
       <div className="container-main" style={{ padding: "2rem 1.25rem" }}>
 
@@ -227,6 +248,86 @@ export default async function HomePage() {
         )}
 
       </div>
+
+      <hr className="section-divider" />
+
+      {/* ── RECENT SCORES ── */}
+      {recentScores.length > 0 && (
+        <div style={{ background: "#0f0f18" }}>
+        <div className="container-main" style={{ padding: "2rem 1.25rem 1.5rem" }}>
+          <div style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
+            <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500 }}>
+              Recent Scores
+            </span>
+          </div>
+          <div className="rscore-grid">
+            {[recentScores.slice(0, 8), recentScores.slice(8, 16)].map((col, ci) => (
+              <div key={ci} className="rscore-col">
+                {col.map((s: RecentScore) => {
+                  const mods = parseMods(s.mods);
+                  const dc = diffColor(s.diff);
+                  const gc = gradeColor(s.grade);
+                  return (
+                    <div key={s.id} className="rscore-row" style={{ "--gc": gc } as React.CSSProperties}>
+                      {/* Cover thumbnail */}
+                      <div
+                        className="rscore-cover"
+                        style={{ backgroundImage: `url(https://assets.ppy.sh/beatmaps/${s.set_id}/covers/list.jpg)` }}
+                      />
+
+                      {/* Grade */}
+                      <div className="rscore-grade">
+                        <GradeImage grade={s.grade} small />
+                      </div>
+
+                      {/* Map info */}
+                      <div className="rscore-mapinfo">
+                        <Link href={`/b/${s.map_id}`} className="rscore-maptitle">
+                          {s.artist} &mdash; {s.title}
+                        </Link>
+                        <div className="rscore-diff">
+                          <svg width="9" height="9" viewBox="0 0 24 24" fill={dc} style={{ flexShrink: 0 }}>
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                          </svg>
+                          <span style={{ color: dc, fontWeight: 700 }}>{s.diff.toFixed(2)}</span>
+                          <span>{s.version}</span>
+                        </div>
+                      </div>
+
+                      {/* Mods */}
+                      <div className="rscore-mods">
+                        {mods[0] === "NM"
+                          ? <span className="rscore-mod-nm">NM</span>
+                          : mods.map(m => <span key={m} className="score-mod">{m}</span>)
+                        }
+                      </div>
+
+                      {/* Stats */}
+                      <div className="rscore-stats">
+                        <span className="rscore-pp">{s.pp.toFixed(0)}pp</span>
+                        <span className="rscore-acc">{s.acc.toFixed(2)}%</span>
+                      </div>
+
+                      {/* Player + time stacked */}
+                      <div className="rscore-player-wrap">
+                        <Link href={`/u/${s.userid}`} className="rscore-player">
+                          <img src={`http://a.pawinput.xyz/${s.userid}`} alt="" className="rscore-avatar" />
+                          <span>{s.player_name}</span>
+                        </Link>
+                        <div className="rscore-time">
+                          {s.play_time ? timeAgo(new Date(s.play_time).getTime() / 1000) : "—"}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </div>
+        </div>
+      )}
+
     </div>
   );
 }

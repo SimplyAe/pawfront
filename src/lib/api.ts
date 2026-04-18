@@ -218,10 +218,10 @@ export async function getPlayerStatus(id: number): Promise<PlayerStatus | null> 
 }
 
 export async function searchPlayers(query: string): Promise<{ id: number; name: string }[]> {
-  const data = await apiFetch<{ status: string; matches: { id: number; name: string }[] }>(
+  const data = await apiFetch<{ status: string; result: { id: number; name: string }[] }>(
     `/search_players?q=${encodeURIComponent(query)}`
   );
-  return data?.matches ?? [];
+  return data?.result ?? [];
 }
 
 export function avatarUrl(userId: number): string {
@@ -289,6 +289,104 @@ export async function getBeatmaps(params: {
     `/get_beatmaps?${qs.toString()}`
   );
   return { total: data?.total ?? 0, beatmapsets: data?.beatmapsets ?? [] };
+}
+
+export interface ClanEntry {
+  id: number;
+  name: string;
+  tag: string;
+  owner_name: string;
+  member_count: number;
+  total_pp: number;
+  total_rscore: number;
+  created_at: string | null;
+}
+
+export interface ClanMember {
+  id: number;
+  name: string;
+  country: string;
+  clan_priv: number;
+  pp: number;
+  acc: number;
+  rscore: number;
+  plays: number;
+}
+
+export interface ClanDetail {
+  id: number;
+  name: string;
+  tag: string;
+  description: string | null;
+  created_at: string | null;
+  owner_id: number;
+  owner_name: string;
+}
+
+export interface ClanInvite {
+  id: number;
+  clan_id: number;
+  clan_name: string;
+  clan_tag: string;
+  inviter_name: string;
+  created_at: string | null;
+}
+
+export async function getClanInvites(userId: number): Promise<ClanInvite[]> {
+  const data = await apiFetch<{ status: string; invites: ClanInvite[] }>(
+    `/get_clan_invites?user_id=${userId}`
+  );
+  return data?.invites ?? [];
+}
+
+export async function getClan(id: number, mode = 0): Promise<{ clan: ClanDetail; members: ClanMember[] } | null> {
+  const data = await apiFetch<{ status: string; clan: ClanDetail; members: ClanMember[] }>(
+    `/get_clan?id=${id}&mode=${mode}`
+  );
+  if (!data || data.status !== "success") return null;
+  return { clan: data.clan, members: data.members };
+}
+
+export async function getClans(params: {
+  mode?: number;
+  page?: number;
+  limit?: number;
+}): Promise<{ total: number; clans: ClanEntry[] }> {
+  const qs = new URLSearchParams();
+  if (params.mode  != null) qs.set("mode",  String(params.mode));
+  if (params.page  != null) qs.set("page",  String(params.page));
+  if (params.limit != null) qs.set("limit", String(params.limit));
+  const data = await apiFetch<{ status: string; total: number; clans: ClanEntry[] }>(
+    `/get_clans?${qs.toString()}`
+  );
+  return { total: data?.total ?? 0, clans: data?.clans ?? [] };
+}
+
+export interface RecentScore {
+  id: number;
+  userid: number;
+  player_name: string;
+  pp: number;
+  acc: number;
+  score: number;
+  mode: number;
+  grade: string;
+  max_combo: number;
+  mods: number;
+  play_time: string | null;
+  map_id: number;
+  title: string;
+  artist: string;
+  version: string;
+  set_id: number;
+  diff: number;
+}
+
+export async function getRecentScores(limit = 20): Promise<RecentScore[]> {
+  const data = await apiFetch<{ status: string; scores: RecentScore[] }>(
+    `/get_recent_scores?limit=${limit}`
+  );
+  return data?.scores ?? [];
 }
 
 export function beatmapCoverUrl(setId: number): string {

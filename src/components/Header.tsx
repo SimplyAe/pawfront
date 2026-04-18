@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { searchPlayers } from "@/lib/api";
 import { logoutAction } from "@/app/logout/actions";
+import NotificationBell from "@/components/NotificationBell";
 import type { SessionUser } from "@/lib/session";
 
 export default function Header({ user }: { user: SessionUser | null }) {
@@ -103,6 +104,7 @@ export default function Header({ user }: { user: SessionUser | null }) {
           <NavLink href="/">Home</NavLink>
           <NavLink href="/leaderboard">Leaderboard</NavLink>
           <NavLink href="/beatmaps">Beatmaps</NavLink>
+          <NavLink href="/clans">Clans</NavLink>
         </div>
 
         <div style={{ flex: 1 }} />
@@ -174,6 +176,7 @@ export default function Header({ user }: { user: SessionUser | null }) {
                 {!!(user.priv & ((1 << 12) | (1 << 13) | (1 << 14))) && (
                   <Link href="/staff" className="staff-nav-btn">Staff</Link>
                 )}
+                <NotificationBell userId={user.id} />
                 <Link
                   href={`/u/${user.id}`}
                   style={{ display: "flex", alignItems: "center", gap: "0.45rem", color: "rgba(255,255,255,0.85)", fontSize: "0.875rem" }}

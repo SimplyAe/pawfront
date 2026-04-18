@@ -84,7 +84,7 @@ export default function BeatmapPage() {
           {/* LEFT: main beatmap info */}
           <div className="bmap-hdr-main">
 
-            {/* Cover + difficulty picker */}
+            {/* Cover */}
             <div className="bmap-picker-row">
               <img
                 src={coverUrl}
@@ -92,23 +92,6 @@ export default function BeatmapPage() {
                 className="bmap-cover-thumb"
                 onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
               />
-              {sortedDiffs.length > 1 && (
-                <div className="bmap-diff-picker">
-                  {sortedDiffs.map((d) => {
-                    const col = diffColor(d.diff);
-                    const active = d.id === map.id;
-                    return (
-                      <button
-                        key={d.id}
-                        className={`bmap-diff-dot${active ? " bmap-diff-dot--active" : ""}`}
-                        style={{ "--dc": col } as React.CSSProperties}
-                        onClick={() => switchDiff(d)}
-                        title={`${d.version} (${d.diff.toFixed(2)}\u2605)`}
-                      />
-                    );
-                  })}
-                </div>
-              )}
             </div>
 
             {/* Current diff name + stars */}
@@ -204,6 +187,33 @@ export default function BeatmapPage() {
 
         </div>
       </div>
+
+      {/* ── DIFF NAVIGATOR ── */}
+      {sortedDiffs.length > 1 && (
+        <div className="bmap-diffnav container-main">
+          <div className="bmap-diffnav-label">Difficulties</div>
+          <div className="bmap-diffnav-list">
+            {sortedDiffs.map((d) => {
+              const col = diffColor(d.diff);
+              const active = d.id === map.id;
+              return (
+                <button
+                  key={d.id}
+                  className={`bmap-diffnav-btn${active ? " bmap-diffnav-btn--active" : ""}`}
+                  style={{ "--dc": col } as React.CSSProperties}
+                  onClick={() => switchDiff(d)}
+                >
+                  <svg className="bmap-diffnav-star" width="10" height="10" viewBox="0 0 24 24" fill={col}>
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                  <span className="bmap-diffnav-name">{d.version}</span>
+                  <span className="bmap-diffnav-sr" style={{ color: col }}>{d.diff.toFixed(2)}★</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* ── SCOREBOARD ── */}
       <div className="bmap-content container-main">

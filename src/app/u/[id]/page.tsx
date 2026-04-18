@@ -549,10 +549,8 @@ function ScoreRow({ score }: { score: Score }) {
           }}
         >
           <div style={{ minWidth: 0, flex: 1 }}>
-            <a
-              href={`https://osu.ppy.sh/beatmapsets/${bm.set_id}#osu/${bm.id}`}
-              target="_blank"
-              rel="noreferrer"
+            <Link
+              href={`/b/${bm.id}`}
               style={{
                 color: "#fff",
                 fontWeight: 600,
@@ -564,7 +562,7 @@ function ScoreRow({ score }: { score: Score }) {
               }}
             >
               {bm.artist} - {bm.title}
-            </a>
+            </Link>
             <div
               style={{
                 fontSize: "0.78rem",
@@ -635,10 +633,8 @@ function MostPlayedRow({ map }: { map: MostPlayedMap }) {
         <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.45)" }} />
       </div>
       <div style={{ flex: 1, padding: "0.6rem 0.9rem", minWidth: 0 }}>
-        <a
-          href={`https://osu.ppy.sh/beatmapsets/${map.set_id}#osu/${map.id}`}
-          target="_blank"
-          rel="noreferrer"
+        <Link
+          href={`/b/${map.id}`}
           style={{
             color: "#fff",
             fontWeight: 600,
@@ -650,7 +646,7 @@ function MostPlayedRow({ map }: { map: MostPlayedMap }) {
           }}
         >
           {map.artist} - {map.title}
-        </a>
+        </Link>
         <div
           style={{
             display: "flex",

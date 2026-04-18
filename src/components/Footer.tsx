@@ -7,7 +7,6 @@ export default function Footer() {
         background: "#2f2f3b",
         borderTop: "1px solid #3a3a4e",
         padding: "1.5rem",
-        marginTop: "3rem",
         textAlign: "center",
       }}
     >

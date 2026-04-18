@@ -1,3 +1,5 @@
+"use client";
+
 import { gradeToFile } from "@/lib/utils";
 
 interface GradeImageProps {
