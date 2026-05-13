@@ -1,13 +1,18 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import html from "@bbob/html";
+import presetHTML5 from "@bbob/preset-html5";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import Flag from "@/components/Flag";
 import {
   getPlayerInfo,
   getPlayerScores,
   getPlayerMostPlayed,
   getPlayerStatus,
+  getClan,
   PlayerInfo,
   PlayerStats,
   Score,
@@ -28,6 +33,22 @@ import {
 } from "@/lib/utils";
 import ModeSelector from "@/components/ModeSelector";
 
+interface Comment {
+  id: number;
+  author_id: number;
+  author_name: string;
+  content: string;
+  created_at: string | null;
+}
+
+function renderBBCode(raw: string): string {
+  try {
+    return html(raw, presetHTML5());
+  } catch {
+    return raw.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+}
+
 export default function ProfilePage() {
   const params = useParams();
   const userId = Number(params.id);
@@ -44,6 +65,15 @@ export default function ProfilePage() {
   const [scoresTab, setScoresTab] = useState<"best" | "recent" | "maps">("best");
   const [currentUserId, setCurrentUserId] = useState<number | null>(null);
   const [viewerPriv, setViewerPriv] = useState<number>(0);
+  const [clanTag, setClanTag] = useState<string | null>(null);
+  const [hasBanner, setHasBanner] = useState(false);
+  const [bioEdit, setBioEdit] = useState(false);
+  const [bioValue, setBioValue] = useState("");
+  const [bioSaving, setBioSaving] = useState(false);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [commentText, setCommentText] = useState("");
+  const [commentPosting, setCommentPosting] = useState(false);
+  const [activity, setActivity] = useState<{ yr: number; mo: number; plays: number }[]>([]);
 
   useEffect(() => {
     fetch("/api/me").then((r) => r.json()).then((d) => {
@@ -51,6 +81,13 @@ export default function ProfilePage() {
       setViewerPriv(d?.priv ?? 0);
     });
   }, []);
+
+  useEffect(() => {
+    if (!userId) return;
+    fetch(`/api/comments?user_id=${userId}`)
+      .then((r) => r.json())
+      .then((d) => setComments(d.comments ?? []));
+  }, [userId]);
 
   useEffect(() => {
     async function loadProfile() {
@@ -62,11 +99,21 @@ export default function ProfilePage() {
       if (playerData) {
         setInfo(playerData.info);
         setAllStats(playerData.stats);
+        if (playerData.info.clan_id > 0) {
+          getClan(playerData.info.clan_id).then((c) => setClanTag(c?.clan.tag ?? null));
+        }
       }
       setStatus(playerStatus);
       setLoading(false);
     }
     if (userId) loadProfile();
+  }, [userId]);
+
+  useEffect(() => {
+    if (!userId) return;
+    fetch(`/api/banner/${userId}`, { method: "HEAD" })
+      .then((r) => setHasBanner(r.ok))
+      .catch(() => setHasBanner(false));
   }, [userId]);
 
   const loadScores = useCallback(async () => {
@@ -79,6 +126,10 @@ export default function ProfilePage() {
     setBestScores(best);
     setRecentScores(recent);
     setMostPlayed(maps);
+    fetch(`https://api.pawinput.xyz/v1/get_player_activity?id=${userId}&mode=${modeInt}`, { cache: "no-store" })
+      .then((r) => r.json())
+      .then((d) => setActivity(d.activity ?? []))
+      .catch(() => {});
   }, [userId, mode, mods]);
 
   useEffect(() => {
@@ -102,7 +153,41 @@ export default function ProfilePage() {
   }
 
   const isStaff = !!(viewerPriv & ((1 << 12) | (1 << 13) | (1 << 14)));
+  const isOwn = currentUserId === userId;
   const isRestricted = info ? !(info.priv & 1) : false;
+
+  async function saveBio() {
+    setBioSaving(true);
+    await fetch("/api/userpage", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: bioValue }),
+    });
+    if (info) info.userpage_content = bioValue || null;
+    setBioEdit(false);
+    setBioSaving(false);
+  }
+
+  async function postComment() {
+    if (!commentText.trim() || !currentUserId) return;
+    setCommentPosting(true);
+    const res = await fetch("/api/comments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ target_id: userId, content: commentText.trim() }),
+    });
+    if (res.ok) {
+      setCommentText("");
+      const data = await fetch(`/api/comments?user_id=${userId}`).then((r) => r.json());
+      setComments(data.comments ?? []);
+    }
+    setCommentPosting(false);
+  }
+
+  async function deleteComment(id: number) {
+    await fetch(`/api/comments?id=${id}`, { method: "DELETE" });
+    setComments((prev) => prev.filter((c) => c.id !== id));
+  }
 
   if (!info || (isRestricted && !isStaff && currentUserId !== userId)) {
     return (
@@ -120,12 +205,39 @@ export default function ProfilePage() {
     <div>
       <div
         style={{
-          background: "linear-gradient(180deg, #252534 0%, #1a1a26 100%)",
+          position: "relative",
           borderBottom: "1px solid #3a3a4e",
-          padding: "2rem 1.25rem 0",
+          minHeight: "220px",
+          overflow: "hidden",
+          background: hasBanner
+            ? "transparent"
+            : "linear-gradient(180deg, #252534 0%, #1a1a26 100%)",
         }}
       >
-        <div style={{ maxWidth: "1160px", margin: "0 auto", position: "relative" }}>
+        {hasBanner && (
+          <>
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                backgroundImage: `url(/api/banner/${userId})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                zIndex: 0,
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "linear-gradient(180deg, rgba(15,15,25,0.55) 0%, rgba(15,15,25,0.82) 100%)",
+                zIndex: 1,
+              }}
+            />
+          </>
+        )}
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 2 }}>
+          <div className="container-main">
           {currentUserId === userId && (
             <Link
               href="/settings"
@@ -145,124 +257,63 @@ export default function ProfilePage() {
               Edit Profile
             </Link>
           )}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-end",
-              gap: "1.25rem",
-              flexWrap: "wrap",
-              marginBottom: "1rem",
-            }}
-          >
-            <div style={{ position: "relative", flexShrink: 0 }}>
+          <div style={{ marginBottom: "1rem" }}>
+            {/* Avatar + username — left column only */}
+            <div style={{ display: "flex", gap: "0.85rem", alignItems: "flex-end", paddingBottom: "0.25rem", width: "300px" }}>
               <img
                 src={`http://a.pawinput.xyz/${info.id}`}
                 alt={info.name}
-                style={{
-                  width: "96px",
-                  height: "96px",
-                  borderRadius: "8px",
-                  objectFit: "cover",
-                  border: "2px solid #3a3a4e",
-                  background: "#1e1e2a",
-                  display: "block",
-                }}
+                style={{ width: "80px", height: "80px", borderRadius: "8px", objectFit: "cover", border: "2px solid rgba(255,255,255,0.15)", background: "#1e1e2a", display: "block", flexShrink: 0 }}
               />
-            </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.6rem",
-                  flexWrap: "wrap",
-                  marginBottom: "0.3rem",
-                }}
-              >
-                <img
-                  src={`https://flagcdn.com/24x18/${info.country.toLowerCase()}.png`}
-                  alt={info.country}
-                  style={{ height: "16px", borderRadius: "1px" }}
-                />
-                <h1
-                  style={{
-                    fontSize: "1.6rem",
-                    fontWeight: 700,
-                    color: "#fff",
-                    lineHeight: 1,
-                  }}
-                >
-                  {info.name}
-                </h1>
-                {info.clan_id > 0 && (
-                  <span style={{ color: "#d55b9e", fontSize: "0.9rem" }}>
-                    [{info.custom_badge_name ?? ""}]
-                  </span>
-                )}
-              </div>
-              {getRoleBadges(info.priv).length > 0 && (
-                <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap", marginBottom: "0.35rem" }}>
-                  {getRoleBadges(info.priv).map((badge) => (
-                    <span key={badge.short} className="role-badge" style={{ "--badge-color": badge.color, "--badge-glow": badge.glow } as React.CSSProperties}>
-                      {badge.short}
-                      <span className="role-badge__tooltip">{badge.full}</span>
-                    </span>
-                  ))}
+              <div style={{ minWidth: 0, paddingBottom: "0.1rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.3rem" }}>
+                  <Flag country={info.country} />
+                  <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: "#fff", lineHeight: 1 }}>{info.name}</h1>
+                  {info.clan_id > 0 && clanTag && (
+                    <Link href={`/clans/${info.clan_id}`} style={{ color: "#d55b9e", fontSize: "0.85rem", textDecoration: "none" }}>[{clanTag}]</Link>
+                  )}
                 </div>
-              )}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                  fontSize: "0.82rem",
-                  color: isOnline ? "#68d57f" : "rgba(255,255,255,0.35)",
-                }}
-              >
-                <span className={isOnline ? "online-dot" : "offline-dot"} />
-                {isOnline ? "Online" : "Offline"}
-                {!isOnline && (
-                  <span style={{ color: "rgba(255,255,255,0.25)", marginLeft: "0.25rem" }}>
-                    &mdash; last seen {timeAgo(info.latest_activity)}
-                  </span>
+                {getRoleBadges(info.priv).length > 0 && (
+                  <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap", marginBottom: "0.3rem" }}>
+                    {getRoleBadges(info.priv).map((badge) => (
+                      <span key={badge.short} className="role-badge" style={{ "--badge-color": badge.color, "--badge-glow": badge.glow } as React.CSSProperties}>
+                        {badge.short}<span className="role-badge__tooltip">{badge.full}</span>
+                      </span>
+                    ))}
+                  </div>
                 )}
+                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.8rem", color: isOnline ? "#68d57f" : "rgba(255,255,255,0.35)" }}>
+                  <span className={isOnline ? "online-dot" : "offline-dot"} />
+                  {isOnline ? "Online" : "Offline"}
+                  {!isOnline && <span style={{ color: "rgba(255,255,255,0.25)", marginLeft: "0.2rem" }}>&mdash; last seen {timeAgo(info.latest_activity)}</span>}
+                </div>
               </div>
             </div>
-            {stats && stats.rank > 0 && (
-              <div
-                style={{
-                  display: "flex",
-                  gap: "1.5rem",
-                  flexShrink: 0,
-                  paddingBottom: "0.5rem",
-                }}
-              >
-                <div style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "#fff" }}>
-                    #{addCommas(stats.rank)}
-                  </div>
-                  <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)" }}>
-                    Global
-                  </div>
-                </div>
-                <div style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "#fff" }}>
-                    #{addCommas(stats.country_rank)}
-                  </div>
-                  <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)" }}>
-                    {info.country.toUpperCase()}
-                  </div>
-                </div>
-                <div style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "#d55b9e" }}>
-                    {addCommas(Math.round(stats.pp))}
-                  </div>
-                  <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)" }}>pp</div>
-                </div>
-              </div>
-            )}
           </div>
-          <ModeSelector mode={mode} mods={mods} onChange={handleModeChange} />
+          </div>{/* /container-main */}
+        </div>{/* /absolute bottom wrapper */}
+
+        {/* PP/Rank stats — absolute, left of mode picker */}
+        {stats && stats.rank > 0 && (
+          <div style={{ position: "absolute", right: "440px", bottom: "1rem", zIndex: 3, display: "flex", gap: "1.5rem" }}>
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "#fff" }}>#{addCommas(stats.rank)}</div>
+              <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)" }}>Global</div>
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "#fff" }}>#{addCommas(stats.country_rank)}</div>
+              <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)" }}>{info.country.toUpperCase()}</div>
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: "1.3rem", fontWeight: 700, color: "#d55b9e" }}>{addCommas(Math.round(stats.pp))}</div>
+              <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.4)" }}>pp</div>
+            </div>
+          </div>
+        )}
+
+        {/* Mode selector — absolute far right of banner */}
+        <div style={{ position: "absolute", right: "10px", bottom: "0.75rem", zIndex: 3 }}>
+          <ModeSelector mode={mode} mods={mods} onChange={handleModeChange} banner />
         </div>
       </div>
 
@@ -358,6 +409,10 @@ export default function ProfilePage() {
                       <td>{addCommas(stats.total_hits)}</td>
                     </tr>
                     <tr>
+                      <td>Replays watched</td>
+                      <td>{addCommas(stats.replay_views)}</td>
+                    </tr>
+                    <tr>
                       <td>Registered</td>
                       <td>{formatDate(info.creation_time)}</td>
                     </tr>
@@ -423,6 +478,61 @@ export default function ProfilePage() {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            {/* ── Userpage Bio ── */}
+            {(info.userpage_content || isOwn) && (
+              <div className="up-bio-block">
+                <div className="up-bio-header">
+                  <span className="up-bio-label">About</span>
+                  {isOwn && !bioEdit && (
+                    <button
+                      className="up-bio-edit-btn"
+                      onClick={() => { setBioValue(info.userpage_content ?? ""); setBioEdit(true); }}
+                    >
+                      {info.userpage_content ? "Edit" : "+ Add bio"}
+                    </button>
+                  )}
+                </div>
+                {bioEdit ? (
+                  <div className="up-bio-editor">
+                    <div className="up-bio-tabs">
+                      <span className="up-bio-tab-label">Write</span>
+                    </div>
+                    <textarea
+                      className="up-bio-textarea"
+                      value={bioValue}
+                      onChange={(e) => setBioValue(e.target.value)}
+                      placeholder="Write your bio… BBCode supported: [b], [i], [url], [img], [color], [size], [quote], [spoiler]…"
+                      maxLength={2000}
+                      rows={6}
+                    />
+                    {bioValue && (
+                      <>
+                        <div className="up-bio-preview-label">Preview</div>
+                        <div
+                          className="up-bio-preview"
+                          dangerouslySetInnerHTML={{ __html: renderBBCode(bioValue) }}
+                        />
+                      </>
+                    )}
+                    <div className="up-bio-editor-actions">
+                      <span className="up-bio-charcount">{bioValue.length}/2000</span>
+                      <button className="up-bio-cancel-btn" onClick={() => setBioEdit(false)}>Cancel</button>
+                      <button className="up-bio-save-btn" onClick={saveBio} disabled={bioSaving}>
+                        {bioSaving ? "Saving…" : "Save"}
+                      </button>
+                    </div>
+                  </div>
+                ) : info.userpage_content ? (
+                  <div
+                    className="up-bio-content"
+                    dangerouslySetInnerHTML={{ __html: renderBBCode(info.userpage_content) }}
+                  />
+                ) : isOwn ? (
+                  <div className="up-bio-empty">No bio yet. Click &ldquo;+ Add bio&rdquo; to write one.</div>
+                ) : null}
+              </div>
+            )}
+
             <div
               style={{
                 background: "#1e1e2a",
@@ -502,7 +612,153 @@ export default function ProfilePage() {
             </div>
           </div>
         </div>
+
+        {/* ── Playcount Graph ── */}
+        {activity.length > 0 && (
+          <PlaycountGraph activity={activity} />
+        )}
+
+        {/* ── Comments Section ── */}
+        <div className="up-comments-section">
+          <div className="up-comments-header">
+            <span className="up-comments-title">Comments</span>
+            <span className="up-comments-count">{comments.length}</span>
+          </div>
+
+          {currentUserId && !isOwn && (
+            <div className="up-comment-form">
+              <textarea
+                className="up-comment-textarea"
+                placeholder="Leave a comment…"
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+                maxLength={1000}
+                rows={3}
+              />
+              <div className="up-comment-form-actions">
+                <span className="up-bio-charcount">{commentText.length}/1000</span>
+                <button
+                  className="up-comment-submit-btn"
+                  onClick={postComment}
+                  disabled={commentPosting || !commentText.trim()}
+                >
+                  {commentPosting ? "Posting…" : "Post comment"}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {comments.length === 0 ? (
+            <div className="up-comments-empty">No comments yet.</div>
+          ) : (
+            <div className="up-comments-list">
+              {comments.map((c) => (
+                <div key={c.id} className="up-comment-row">
+                  <img
+                    src={`http://a.pawinput.xyz/${c.author_id}`}
+                    alt=""
+                    className="up-comment-avatar"
+                  />
+                  <div className="up-comment-body">
+                    <div className="up-comment-meta">
+                      <Link href={`/u/${c.author_id}`} className="up-comment-author">{c.author_name}</Link>
+                      <span className="up-comment-time">
+                        {c.created_at ? timeAgo(Math.floor(new Date(c.created_at).getTime() / 1000)) : ""}
+                      </span>
+                      {(isStaff || currentUserId === c.author_id || currentUserId === userId) && (
+                        <button
+                          className="up-comment-delete-btn"
+                          onClick={() => deleteComment(c.id)}
+                          title="Delete comment"
+                        >
+                          ×
+                        </button>
+                      )}
+                    </div>
+                    <div className="up-comment-content">{c.content}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
+    </div>
+  );
+}
+
+const MONTH_ABBR = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+function PlaycountGraph({ activity }: { activity: { yr: number; mo: number; plays: number }[] }) {
+  const now = new Date();
+
+  const endDate    = new Date(now.getFullYear(), now.getMonth(), 1);
+  const firstEntry = activity.length > 0 ? activity[0] : null;
+  // start exactly at first play month; fall back to 12 months ago only when no data
+  const startDate  = firstEntry
+    ? new Date(firstEntry.yr, firstEntry.mo - 1, 1)
+    : new Date(now.getFullYear(), now.getMonth() - 11, 1);
+
+  const totalMonths =
+    (endDate.getFullYear() - startDate.getFullYear()) * 12 +
+    (endDate.getMonth()    - startDate.getMonth()) + 1;
+
+  const slots = Array.from({ length: totalMonths }, (_, i) => {
+    const d     = new Date(startDate.getFullYear(), startDate.getMonth() + i, 1);
+    const isJan = d.getMonth() === 0;
+    const label = isJan ? `Jan ${d.getFullYear()}` : MONTH_ABBR[d.getMonth()];
+    return { yr: d.getFullYear(), mo: d.getMonth() + 1, label, plays: 0 };
+  });
+
+  for (const a of activity) {
+    const slot = slots.find((s) => s.yr === a.yr && s.mo === a.mo);
+    if (slot) slot.plays = a.plays;
+  }
+
+  const max = Math.max(...slots.map((s) => s.plays), 1);
+  const tickInterval = slots.length > 24 ? Math.floor(slots.length / 12) : 0;
+
+  return (
+    <div className="up-graph-block">
+      <div className="up-graph-header">
+        <span className="up-graph-title">Play History</span>
+        <span className="up-graph-sub">Submitted scores · all time</span>
+      </div>
+      <ResponsiveContainer width="100%" height={160}>
+        <LineChart data={slots} margin={{ top: 10, right: 12, left: -24, bottom: 0 }}>
+          <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={true} horizontal={true} />
+          <XAxis
+            dataKey="label"
+            tick={{ fill: "rgba(255,255,255,0.35)", fontSize: 10 }}
+            tickLine={false}
+            axisLine={false}
+            interval={tickInterval}
+          />
+          <YAxis
+            tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 10 }}
+            tickLine={false}
+            axisLine={false}
+            domain={[0, max]}
+            allowDecimals={false}
+            width={40}
+          />
+          <Tooltip
+            contentStyle={{ background: "#1e1e2a", border: "1px solid #3a3a4e", borderRadius: "6px", fontSize: "0.8rem" }}
+            labelStyle={{ color: "rgba(255,255,255,0.5)" }}
+            itemStyle={{ color: "#d55b9e" }}
+            formatter={(v) => [v, "plays"]}
+            cursor={{ stroke: "rgba(255,255,255,0.15)", strokeWidth: 1 }}
+          />
+          <Line
+            type="linear"
+            dataKey="plays"
+            stroke="#d55b9e"
+            strokeWidth={1.5}
+            dot={false}
+            activeDot={{ r: 3, fill: "#d55b9e", strokeWidth: 0 }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 }

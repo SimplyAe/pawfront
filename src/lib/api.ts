@@ -233,6 +233,18 @@ export async function getMapInfo(id: number): Promise<BeatmapInfo | null> {
   return data?.map ?? null;
 }
 
+export interface TopScore extends Score {
+  userid: number;
+  player_name: string;
+}
+
+export async function getTopScores(mode: number, page: number): Promise<TopScore[]> {
+  const data = await apiFetch<{ status: string; scores: TopScore[] }>(
+    `/get_top_scores?mode=${mode}&page=${page}&limit=10`
+  );
+  return data?.scores ?? [];
+}
+
 export async function getMapScores(
   id: number,
   mode: number,

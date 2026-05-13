@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getLeaderboard, LeaderboardEntry } from "@/lib/api";
 import { addCommas, modeToInt } from "@/lib/utils";
 import ModeSelector from "@/components/ModeSelector";
+import Flag from "@/components/Flag";
 
 const SORT_OPTIONS = [
   { key: "pp", label: "Performance" },
@@ -203,11 +204,7 @@ export default function LeaderboardPage() {
                               alt=""
                               className="player-avatar-small"
                             />
-                            <img
-                              src={`https://flagcdn.com/20x15/${entry.country.toLowerCase()}.png`}
-                              alt={entry.country}
-                              className="flag-img"
-                            />
+                            <Flag country={entry.country} />
                             {entry.clan_tag && (
                               <span style={{ color: "#d55b9e", fontSize: "0.8rem" }}>
                                 [{entry.clan_tag}]
