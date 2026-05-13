@@ -187,6 +187,194 @@ export async function getRecentScores(limit = 30): Promise<{ scores?: RecentScor
   }
 }
 
+export type UserDetail = {
+  id: number; name: string; email: string; country: string; priv: number;
+  restricted: boolean; creation_time: number; latest_activity: number;
+  silence_end: number; silence_remaining: number; donor_end: number;
+};
+
+export type HwidLog = {
+  cpu_md5: string; gpu_md5: string; machine_guid_md5: string;
+  motherboard_md5: string; bios_md5: string; login_time: string | null;
+};
+
+export type LoginHistory = {
+  ip: string; osu_ver: string; osu_stream: string; datetime: string | null;
+};
+
+export type AuditLog = {
+  id: number; from_id: number; from_name: string | null;
+  to_id: number; to_name: string | null;
+  action: string; msg: string | null; time: string | null;
+};
+
+export async function getUserDetail(targetId: number): Promise<{
+  user?: UserDetail; hwid_logs?: HwidLog[]; login_history?: LoginHistory[]; audit_logs?: AuditLog[]; error?: string;
+}> {
+  const session = await getSession();
+  if (!session) redirect("/login");
+  try {
+    const res = await fetch(`${API}/staff/user_detail?target_id=${targetId}&actor_id=${session.id}`, { cache: "no-store" });
+    const data = await res.json();
+    if (data.status !== "success") return { error: data.message ?? "Failed." };
+    return { user: data.user, hwid_logs: data.hwid_logs, login_history: data.login_history, audit_logs: data.audit_logs };
+  } catch { return { error: "Could not reach the server." }; }
+}
+
+export async function silenceUser(
+  targetId: number, duration: number, reason: string,
+): Promise<{ error?: string; action?: string; silence_end?: number }> {
+  const session = await getSession();
+  if (!session) redirect("/login");
+  try {
+    const res = await fetch(`${API}/staff/silence`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ actor_id: String(session.id), target_id: String(targetId), duration: String(duration), reason }).toString(),
+      cache: "no-store",
+    });
+    const data = await res.json();
+    if (data.status !== "success") return { error: data.message ?? "Action failed." };
+    return { action: data.action, silence_end: data.silence_end };
+  } catch { return { error: "Could not reach the server." }; }
+}
+
+export async function editUser(
+  targetId: number, name: string, email: string, country: string,
+): Promise<{ error?: string; changes?: string[] }> {
+  const session = await getSession();
+  if (!session) redirect("/login");
+  try {
+    const res = await fetch(`${API}/staff/edit_user`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ actor_id: String(session.id), target_id: String(targetId), name, email, country }).toString(),
+      cache: "no-store",
+    });
+    const data = await res.json();
+    if (data.status !== "success") return { error: data.message ?? "Action failed." };
+    return { changes: data.changes };
+  } catch { return { error: "Could not reach the server." }; }
+}
+
+export async function resetHwid(targetId: number): Promise<{ error?: string }> {
+  const session = await getSession();
+  if (!session) redirect("/login");
+  try {
+    const res = await fetch(`${API}/staff/reset_hwid`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ actor_id: String(session.id), target_id: String(targetId) }).toString(),
+      cache: "no-store",
+    });
+    const data = await res.json();
+    if (data.status !== "success") return { error: data.message ?? "Action failed." };
+    return {};
+  } catch { return { error: "Could not reach the server." }; }
+}
+
+export async function removeScore(scoreId: number): Promise<{ error?: string; player_name?: string; map?: string; pp?: number }> {
+  const session = await getSession();
+  if (!session) redirect("/login");
+  try {
+    const res = await fetch(`${API}/staff/remove_score`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ actor_id: String(session.id), score_id: String(scoreId) }).toString(),
+      cache: "no-store",
+    });
+    const data = await res.json();
+    if (data.status !== "success") return { error: data.message ?? "Action failed." };
+    return { player_name: data.player_name, map: data.map, pp: data.pp };
+  } catch { return { error: "Could not reach the server." }; }
+}
+
+export async function getStaffLogs(page = 1, action?: string, userId?: number): Promise<{
+  logs?: AuditLog[]; total?: number; error?: string;
+}> {
+  const session = await getSession();
+  if (!session) redirect("/login");
+  try {
+    const params = new URLSearchParams({ actor_id: String(session.id), page: String(page) });
+    if (action) params.set("action", action);
+    if (userId) params.set("user_id", String(userId));
+    const res = await fetch(`${API}/staff/logs?${params.toString()}`, { cache: "no-store" });
+    const data = await res.json();
+    if (data.status !== "success") return { error: data.message ?? "Failed." };
+    return { logs: data.logs, total: data.total };
+  } catch { return { error: "Could not reach the server." }; }
+}
+
+export async function broadcastAlert(message: string): Promise<{ error?: string; sent_to?: number }> {
+  const session = await getSession();
+  if (!session) redirect("/login");
+  try {
+    const res = await fetch(`${API}/staff/broadcast_alert`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ actor_id: String(session.id), message }).toString(),
+      cache: "no-store",
+    });
+    const data = await res.json();
+    if (data.status !== "success") return { error: data.message ?? "Action failed." };
+    return { sent_to: data.sent_to };
+  } catch { return { error: "Could not reach the server." }; }
+}
+
+export async function toggleMaintenance(enabled: boolean): Promise<{ error?: string }> {
+  const session = await getSession();
+  if (!session) redirect("/login");
+  try {
+    const res = await fetch(`${API}/staff/maintenance`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ actor_id: String(session.id), enabled: String(enabled) }).toString(),
+      cache: "no-store",
+    });
+    const data = await res.json();
+    if (data.status !== "success") return { error: data.message ?? "Action failed." };
+    return {};
+  } catch { return { error: "Could not reach the server." }; }
+}
+
+export async function getMaintenanceStatus(): Promise<{ maintenance?: boolean; error?: string }> {
+  const session = await getSession();
+  if (!session) redirect("/login");
+  try {
+    const res = await fetch(`${API}/staff/maintenance?actor_id=${session.id}`, { cache: "no-store" });
+    const data = await res.json();
+    if (data.status !== "success") return { error: data.message ?? "Failed." };
+    return { maintenance: data.maintenance };
+  } catch { return { error: "Could not reach the server." }; }
+}
+
+export async function restartServer(): Promise<{ error?: string; message?: string }> {
+  const session = await getSession();
+  if (!session) redirect("/login");
+  try {
+    const res = await fetch(`${API}/staff/restart`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ actor_id: String(session.id) }).toString(),
+      cache: "no-store",
+    });
+    const data = await res.json();
+    if (data.status !== "success") return { error: data.message ?? "Action failed." };
+    return { message: data.message };
+  } catch { return { error: "Could not reach the server." }; }
+}
+
+export async function getActivityStats(): Promise<{ hourly?: { hour: string; count: number }[]; error?: string }> {
+  const session = await getSession();
+  if (!session) redirect("/login");
+  try {
+    const res = await fetch(`${API}/staff/activity_stats?actor_id=${session.id}`, { cache: "no-store" });
+    const data = await res.json();
+    if (data.status !== "success") return { error: data.message ?? "Failed." };
+    return { hourly: data.hourly };
+  } catch { return { error: "Could not reach the server." }; }
+}
+
 export async function setMapStatus(
   beatmapId: number,
   newStatus: number,

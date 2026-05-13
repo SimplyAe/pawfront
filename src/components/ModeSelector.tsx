@@ -6,6 +6,8 @@ interface ModeSelectorProps {
   mode: string;
   mods: string;
   onChange: (mode: string, mods: string) => void;
+  vertical?: boolean;
+  banner?: boolean;
 }
 
 const MODES = [
@@ -27,10 +29,11 @@ function isDisabled(mode: string, mods: string): boolean {
   return false;
 }
 
-export default function ModeSelector({ mode, mods, onChange }: ModeSelectorProps) {
+export default function ModeSelector({ mode, mods, onChange, vertical, banner }: ModeSelectorProps) {
+  const barClass = `mode-bar${vertical ? " mode-bar--vertical" : ""}${banner ? " mode-bar--banner" : ""}`;
   return (
-    <div className="mode-bar">
-      <div style={{ display: "flex", alignItems: "center" }}>
+    <div className={barClass}>
+      <div style={vertical ? {} : { display: "flex", alignItems: "center" }}>
         {MODES.map((m) => (
           <button
             key={m.key}
@@ -44,7 +47,7 @@ export default function ModeSelector({ mode, mods, onChange }: ModeSelectorProps
         ))}
       </div>
       <div className="mode-divider" />
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={vertical ? {} : { display: "flex", alignItems: "center" }}>
         {MODS.map((md) => {
           const wouldDisable = isDisabled(mode, md.key);
           return (

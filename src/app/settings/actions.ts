@@ -106,3 +106,28 @@ export async function uploadAvatarAction(
 
   return { success: "Avatar updated! It may take a moment to refresh." };
 }
+
+export async function uploadBannerAction(
+  _prev: SettingsState,
+  formData: FormData,
+): Promise<SettingsState> {
+  const session = await getSession();
+  if (!session) redirect("/login");
+
+  const banner = formData.get("banner") as File | null;
+  if (!banner || banner.size === 0) return { general: "Please select an image." };
+  if (!banner.type.startsWith("image/")) return { general: "File must be an image." };
+  if (banner.size > 8 * 1024 * 1024) return { general: "Image must be under 8 MB." };
+
+  const ext = banner.type === "image/png" ? "png" : banner.type === "image/webp" ? "webp" : "jpg";
+
+  try {
+    const { writeFile } = await import("fs/promises");
+    const bytes = await banner.arrayBuffer();
+    await writeFile(`/root/pawtoka/.data/banners/${session.id}.${ext}`, Buffer.from(bytes));
+  } catch {
+    return { general: "Failed to save banner. Try again." };
+  }
+
+  return { success: "Banner updated! It may take a moment to refresh." };
+}

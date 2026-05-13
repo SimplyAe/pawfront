@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getPlayerCount, getLeaderboard, getServerStats, getRecentScores, type RecentScore } from "@/lib/api";
 import { addCommas, parseMods, diffColor, timeAgo } from "@/lib/utils";
 import GradeImage from "@/components/GradeImage";
+import Flag from "@/components/Flag";
 
 function gradeColor(grade: string): string {
   const g = grade.toUpperCase();
@@ -52,8 +53,8 @@ export default async function HomePage() {
             </ul>
 
             <div className="hero-actions">
-              <Link href="/leaderboard" className="hero-btn primary">
-                View Leaderboards
+              <Link href="/top-plays" className="hero-btn primary">
+                Top PP Plays
               </Link>
             </div>
           </div>
@@ -230,7 +231,7 @@ export default async function HomePage() {
                       <td style={{ padding: "0.6rem 1rem" }}>
                         <Link href={`/u/${entry.player_id}`} style={{ display: "flex", alignItems: "center", gap: "0.6rem", color: "#fff" }}>
                           <img src={`http://a.pawinput.xyz/${entry.player_id}`} alt="" className="player-avatar-small" />
-                          <img src={`https://flagcdn.com/20x15/${entry.country.toLowerCase()}.png`} alt={entry.country} className="flag-img" />
+                          <Flag country={entry.country} />
                           {entry.clan_tag && <span style={{ color: "#d55b9e", fontSize: "0.8rem" }}>[{entry.clan_tag}]</span>}
                           <span style={{ fontWeight: 500 }}>{entry.name}</span>
                         </Link>
