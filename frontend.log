@@ -19,3 +19,120 @@ Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
 [Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
 Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
 error: script "start" was terminated by signal SIGHUP (Terminal hung up)
+nohup: ignoring input
+
+> pawtoka-web@0.1.0 start
+> next start -p 8888 -p 8888
+
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::8888
+    at <unknown> (Error: listen EADDRINUSE: address already in use :::8888)
+    at new Promise (<anonymous>) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 8888
+}
+nohup: ignoring input
+
+> pawtoka-web@0.1.0 start
+> next start -p 8888 -p 8888
+
+   ▲ Next.js 15.5.14
+   - Local:        http://localhost:8888
+   - Network:      http://81.169.177.64:8888
+
+ ✓ Starting...
+ ✓ Ready in 543ms
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+nohup: ignoring input
+
+> pawtoka-web@0.1.0 start
+> next start -p 8888 -p 8888
+
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::8888
+    at <unknown> (Error: listen EADDRINUSE: address already in use :::8888)
+    at new Promise (<anonymous>) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 8888
+}
+Killed
+nohup: ignoring input
+
+> pawtoka-web@0.1.0 start
+> next start -p 8888 -p 8888
+
+   ▲ Next.js 15.5.14
+   - Local:        http://localhost:8888
+   - Network:      http://81.169.177.64:8888
+
+ ✓ Starting...
+ ✓ Ready in 447ms
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+Killed
+nohup: ignoring input
+
+> pawtoka-web@0.1.0 start
+> next start -p 8888 -p 8888
+
+   ▲ Next.js 15.5.14
+   - Local:        http://localhost:8888
+   - Network:      http://81.169.177.64:8888
+
+ ✓ Starting...
+ ✓ Ready in 456ms
+Killed
+nohup: ignoring input
+
+> pawtoka-web@0.1.0 start
+> next start -p 8888 -p 8888
+
+   ▲ Next.js 15.5.14
+   - Local:        http://localhost:8888
+   - Network:      http://81.169.177.64:8888
+
+ ✓ Starting...
+ ✓ Ready in 444ms
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]
+[Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+Read more: https://nextjs.org/docs/messages/failed-to-find-server-action]

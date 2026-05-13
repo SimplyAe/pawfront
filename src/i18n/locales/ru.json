@@ -1,0 +1,392 @@
+{
+  "nav": {
+    "home": "Главная",
+    "leaderboard": "Таблица лидеров",
+    "beatmaps": "Битмапы",
+    "clans": "Кланы",
+    "topPlays": "Топ игры",
+    "staff": "Команда",
+    "signIn": "Войти",
+    "signOut": "Выйти",
+    "register": "Регистрация",
+    "searchPlaceholder": "Поиск игроков или карт...",
+    "closeSearch": "Закрыть поиск",
+    "openSearch": "Открыть поиск",
+    "contributors": "Авторы",
+    "more": "Ещё",
+    "client": "Клиент"
+  },
+  "footer": {
+    "tagline": "Частный сервер osu!",
+    "leaderboard": "Таблица лидеров"
+  },
+  "home": {
+    "totalUsers": "Всего игроков",
+    "online": "Онлайн",
+    "tagline1": "Добро пожаловать на",
+    "tagline2": "Лучший приватный сервер osu!",
+    "tagline3": "Играй, соревнуйся, улучшайся",
+    "topPpPlays": "Топ PP игр",
+    "staff": "Команда проекта",
+    "topPlayers": "Топ игроков",
+    "viewAll": "Посмотреть всех",
+    "recentScores": "Недавние результаты",
+    "stats": {
+      "onlineRegistered": "Зарегистрировано онлайн",
+      "latestPlayer": "Последний игрок",
+      "submittedScores": "Отправлено результатов",
+      "restrictedPlayers": "Ограниченных игроков",
+      "topScore": "Лучший результат",
+      "doneBy": "установил",
+      "totalPp": "Всего PP"
+    }
+  },
+  "leaderboard": {
+    "title": "Таблица лидеров",
+    "countryPlaceholder": "Выберите страну",
+    "loading": "Загрузка...",
+    "noPlayers": "Игроки не найдены",
+    "prev": "Назад",
+    "next": "Вперёд",
+    "page": "Страница",
+    "sort": {
+      "performance": "По PP",
+      "rankedScore": "Рейтинговый счёт",
+      "totalScore": "Общий счёт",
+      "accuracy": "По точности",
+      "playCount": "По количеству игр",
+      "playtime": "По времени игры"
+    },
+    "columns": {
+      "rank": "Место",
+      "player": "Игрок",
+      "pp": "PP",
+      "score": "Счёт",
+      "accuracy": "Точность",
+      "playcount": "Игры",
+      "maxCombo": "Макс. комбо"
+    }
+  },
+  "topPlays": {
+    "title": "Топ игры",
+    "subtitle": "Лучшие результаты игроков",
+    "loading": "Загрузка...",
+    "noScores": "Результаты не найдены",
+    "prev": "Назад",
+    "next": "Вперёд",
+    "fc": "FC",
+    "miss": "Промах",
+    "misses": "Промахи"
+  },
+  "beatmaps": {
+    "searchPlaceholder": "Поиск битмапов...",
+    "loading": "Загрузка...",
+    "noResults": "Ничего не найдено",
+    "results": "результатов",
+    "mappedBy": "Автор",
+    "prev": "Назад",
+    "next": "Вперёд",
+    "status": {
+      "label": "Статус",
+      "any": "Любой",
+      "ranked": "Рейтинговые",
+      "approved": "Одобренные",
+      "loved": "Любимые",
+      "qualified": "Квалифицированные",
+      "pending": "На рассмотрении",
+      "graveyard": "Заброшенные"
+    },
+    "mode": {
+      "label": "Режим",
+      "any": "Любой"
+    },
+    "sort": {
+      "label": "Сортировка",
+      "plays": "По играм",
+      "difficulty": "По сложности",
+      "title": "По названию",
+      "artist": "По исполнителю"
+    }
+  },
+  "profile": {
+    "online": "Онлайн",
+    "offline": "Офлайн",
+    "playing": "Играет",
+    "global": "Глобальный",
+    "rank": {
+      "title": "Ранг",
+      "global": "Глобальный",
+      "country": "По стране"
+    },
+    "stats": {
+      "title": "Статистика",
+      "pp": "PP",
+      "rankedScore": "Рейтинговый счёт",
+      "totalScore": "Общий счёт",
+      "maxCombo": "Макс. комбо",
+      "playcount": "Количество игр",
+      "playtime": "Время в игре",
+      "accuracy": "Точность",
+      "totalHits": "Всего попаданий",
+      "replaysWatched": "Просмотрено реплеев",
+      "registered": "Дата регистрации"
+    },
+    "grades": "Оценки",
+    "tabs": {
+      "best": "Лучшие",
+      "recent": "Недавние",
+      "mostPlayed": "Самые играемые"
+    },
+    "scores": {
+      "noScores": "Результатов пока нет",
+      "noRecent": "Недавних результатов нет",
+      "noMostPlayed": "Ещё не играл",
+      "loadMore": "Загрузить ещё",
+      "fc": "FC",
+      "miss": "Промах",
+      "misses": "Промахи",
+      "timesPlayed": "Раз сыграно"
+    },
+    "playcountGraph": {
+      "title": "Активность",
+      "subtitle": "Количество игр по дням"
+    },
+    "userpage": {
+      "edit": "Редактировать",
+      "save": "Сохранить",
+      "cancel": "Отмена",
+      "preview": "Предпросмотр",
+      "write": "Написать",
+      "saving": "Сохранение..."
+    },
+    "comments": {
+      "title": "Комментарии",
+      "placeholder": "Напишите комментарий...",
+      "post": "Отправить",
+      "delete": "Удалить",
+      "noComments": "Комментариев пока нет",
+      "posting": "Отправка..."
+    }
+  },
+  "login": {
+    "title": "Вход",
+    "noAccount": "Нет аккаунта?",
+    "register": "Зарегистрироваться",
+    "username": "Имя пользователя",
+    "password": "Пароль",
+    "submit": "Войти",
+    "submitting": "Вход...",
+    "forgotPassword": "Забыли пароль?",
+    "resetModal": {
+      "title": "Сброс пароля",
+      "description": "Мы отправим вам письмо для восстановления пароля",
+      "usernameOrEmail": "Имя пользователя или Email",
+      "send": "Отправить",
+      "sending": "Отправка...",
+      "successTitle": "Письмо отправлено",
+      "successDesc": "Проверьте почту",
+      "close": "Закрыть"
+    }
+  },
+  "register": {
+    "title": "Регистрация",
+    "hasAccount": "Уже есть аккаунт?",
+    "signIn": "Войти",
+    "username": "Имя пользователя",
+    "email": "Email",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "submit": "Зарегистрироваться",
+    "submitting": "Регистрация..."
+  },
+  "settings": {
+    "title": "Настройки",
+    "backToHome": "Вернуться на главную",
+    "profile": {
+      "title": "Профиль",
+      "newUsername": "Новое имя пользователя",
+      "newEmail": "Новый Email",
+      "newPassword": "Новый пароль",
+      "confirmPassword": "Подтвердите новый пароль",
+      "currentPassword": "Текущий пароль",
+      "keepCurrent": "Оставить текущий",
+      "confirmPlaceholder": "Введите текущий пароль для подтверждения",
+      "currentRequired": "Требуется текущий пароль",
+      "save": "Сохранить изменения",
+      "saving": "Сохранение..."
+    },
+    "avatar": {
+      "title": "Аватар",
+      "imageFile": "Файл изображения",
+      "imageHint": "Рекомендуется 256x256 px",
+      "currentPassword": "Текущий пароль",
+      "requiredToUpload": "Введите пароль для загрузки",
+      "upload": "Загрузить аватар",
+      "uploading": "Загрузка..."
+    },
+    "banner": {
+      "title": "Баннер профиля",
+      "imageFile": "Файл изображения",
+      "imageHint": "Рекомендуется 1200x300 px",
+      "upload": "Загрузить баннер",
+      "uploading": "Загрузка..."
+    }
+  },
+  "clans": {
+    "title": "Кланы",
+    "loading": "Загрузка...",
+    "noClans": "Кланы не найдены",
+    "members": "Участники",
+    "columns": {
+      "rank": "Место",
+      "clan": "Клан",
+      "pp": "PP",
+      "accuracy": "Точность",
+      "playcount": "Игры",
+      "owner": "Владелец",
+      "members": "Участники",
+      "totalPp": "Всего PP",
+      "role": "Роль",
+      "performance": "Производительность",
+      "plays": "Игры"
+    },
+    "prev": "Назад",
+    "next": "Вперёд",
+    "pageOf": "из"
+  },
+  "common": {
+    "loading": "Загрузка...",
+    "noData": "Нет данных",
+    "prev": "Назад",
+    "next": "Вперёд",
+    "page": "Страница"
+  },
+  "clanDetail": {
+    "notFound": "Клан не найден",
+    "loading": "Загрузка...",
+    "edit": "Редактировать",
+    "tabs": {
+      "info": "Информация",
+      "leaderboard": "Таблица лидеров"
+    },
+    "info": {
+      "owner": "Владелец",
+      "members": "Участники",
+      "topPp": "Топ PP",
+      "founded": "Основан"
+    },
+    "about": {
+      "title": "О клане",
+      "edit": "Редактировать",
+      "addDescription": "Добавить описание",
+      "write": "Написать",
+      "preview": "Предпросмотр",
+      "noDescriptionOwner": "Клан пока не имеет описания. Добавьте его!",
+      "noDescription": "Описание отсутствует"
+    },
+    "editPanel": {
+      "title": "Редактирование клана",
+      "name": "Название клана",
+      "save": "Сохранить",
+      "cancel": "Отмена"
+    },
+    "invite": {
+      "title": "Пригласить игрока",
+      "placeholder": "Имя пользователя",
+      "button": "Пригласить"
+    },
+    "noMembers": "В клане пока нет участников",
+    "kick": "Исключить",
+    "kickNo": "Нет"
+  },
+  "beatmap": {
+    "loading": "Загрузка...",
+    "notFound": "Битмап не найден",
+    "mappedBy": "Автор мапа",
+    "passes": "Пассов",
+    "viewOnOsu": "Посмотреть на osu!",
+    "difficulties": "Сложности",
+    "noScores": "Результатов пока нет",
+    "stats": {
+      "length": "Длина",
+      "bpm": "BPM",
+      "maxCombo": "Макс. комбо",
+      "circleSize": "CS",
+      "hpDrain": "HP",
+      "accuracy": "OD",
+      "approachRate": "AR",
+      "starRating": "Сложность"
+    },
+    "board": {
+      "title": "Таблица рекордов",
+      "loading": "Загрузка таблицы...",
+      "rank": "#",
+      "grade": "Оценка",
+      "score": "Счёт",
+      "accuracy": "Точность",
+      "player": "Игрок",
+      "combo": "Комбо",
+      "pp": "PP",
+      "time": "Время",
+      "mods": "Моды"
+    }
+  },
+  "contributors": {
+    "title": "Авторы проекта",
+    "subtitle": "Люди, благодаря которым этот сервер существует",
+    "noContributors": "Авторы пока не добавлены",
+    "admin": {
+      "open": "Открыть панель",
+      "close": "Закрыть",
+      "title": "Управление авторами",
+      "add": "Добавить автора",
+      "adding": "Добавление...",
+      "added": "Добавлен",
+      "error": "Ошибка",
+      "confirmDelete": "Вы уверены, что хотите удалить этого автора?",
+      "cancelDelete": "Отмена",
+      "fields": {
+        "name": "Имя",
+        "role": "Роль",
+        "osuId": "osu! ID",
+        "github": "GitHub",
+        "avatarUrl": "URL аватара",
+        "description": "Описание",
+        "descriptionPlaceholder": "Короткое описание...",
+        "bannerUrl": "URL баннера",
+        "borderStyle": "Стиль границы",
+        "borderColor1": "Цвет границы 1",
+        "borderColor2": "Цвет границы 2"
+      }
+    }
+  },
+  "welcome": {
+    "title": "Добро пожаловать, {name}!",
+    "sub": "Ваш аккаунт готов. Последний шаг — скачайте кастомный клиент для подключения к pawinput.",
+    "downloadName": "osu!pawclient.rar",
+    "downloadSize": "~48 МБ · Кастомный клиент osu!",
+    "downloadBtn": "Скачать",
+    "stepsTitle": "Как начать играть",
+    "step1": {
+      "title": "Скачайте и распакуйте клиент",
+      "desc1": "Скачайте клиент с помощью кнопки выше. Это файл ",
+      "desc2": " — убедитесь, что у вас установлен ",
+      "desc3": ", чтобы распаковать его."
+    },
+    "step2": {
+      "title": "Запустите osu!.exe",
+      "desc": "Перейдите в распакованную папку и откройте {exe}. Вам не нужно ничего настраивать для подключения к нашему серверу — всё уже готово."
+    },
+    "step3": {
+      "title": "Войдите в аккаунт",
+      "desc": "Используйте логин и пароль, которые вы указали при регистрации, для входа в игру."
+    },
+    "step4": {
+      "title": "Всё готово!",
+      "desc": "После того как настроите игру под себя, перенесите свои карты и наслаждайтесь."
+    },
+    "note": "Это модифицированная версия официального клиента osu!. Ваши скины и карты будут работать как обычно — за единственным исключением карт Aspire, которые могут работать с багами, так как клиент основан на версии 2016 года.",
+    "profileBtn": "Перейти в мой профиль →",
+    "homeLink": "На главную"
+  }
+}

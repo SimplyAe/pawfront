@@ -32,6 +32,9 @@ import {
   gradeToFile,
 } from "@/lib/utils";
 import ModeSelector from "@/components/ModeSelector";
+import BadgeChip from "@/components/BadgeChip";
+import { useT } from "@/i18n";
+import type { BadgeDefinition } from "@/types/badge";
 
 interface Comment {
   id: number;
@@ -50,6 +53,7 @@ function renderBBCode(raw: string): string {
 }
 
 export default function ProfilePage() {
+  const t = useT();
   const params = useParams();
   const userId = Number(params.id);
 
@@ -74,6 +78,7 @@ export default function ProfilePage() {
   const [commentText, setCommentText] = useState("");
   const [commentPosting, setCommentPosting] = useState(false);
   const [activity, setActivity] = useState<{ yr: number; mo: number; plays: number }[]>([]);
+  const [userBadges, setUserBadges] = useState<BadgeDefinition[]>([]);
 
   useEffect(() => {
     fetch("/api/me").then((r) => r.json()).then((d) => {
@@ -81,6 +86,14 @@ export default function ProfilePage() {
       setViewerPriv(d?.priv ?? 0);
     });
   }, []);
+
+  useEffect(() => {
+    if (!userId) return;
+    fetch(`/api/badges/assign?user_id=${userId}`)
+      .then((r) => r.json())
+      .then((d) => setUserBadges(Array.isArray(d) ? d : []))
+      .catch(() => {});
+  }, [userId]);
 
   useEffect(() => {
     if (!userId) return;
@@ -147,7 +160,7 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <div style={{ textAlign: "center", padding: "5rem", color: "rgba(255,255,255,0.3)" }}>
-        Loading...
+        {t("common.loading")}
       </div>
     );
   }
@@ -340,16 +353,16 @@ export default function ProfilePage() {
                   <span className="block-icon">
                     <ChartIcon />
                   </span>
-                  Rank
+                  {t("profile.rank.title")}
                 </div>
                 <table className="stats-table">
                   <tbody>
                     <tr>
-                      <td>Global rank</td>
+                      <td>{t("profile.rank.global")}</td>
                       <td>#{addCommas(stats.rank)}</td>
                     </tr>
                     <tr>
-                      <td>Country rank</td>
+                      <td>{t("profile.rank.country")}</td>
                       <td>#{addCommas(stats.country_rank)}</td>
                     </tr>
                   </tbody>
@@ -370,54 +383,73 @@ export default function ProfilePage() {
                   <span className="block-icon">
                     <PieIcon />
                   </span>
-                  Statistics
+                  {t("profile.stats.title")}
                 </div>
                 <table className="stats-table">
                   <tbody>
                     <tr>
-                      <td>
-                        <b>PP</b>
-                      </td>
+                      <td><b>{t("profile.stats.pp")}</b></td>
                       <td>{addCommas(Math.round(stats.pp))}</td>
                     </tr>
                     <tr>
-                      <td>Ranked score</td>
+                      <td>{t("profile.stats.rankedScore")}</td>
                       <td>{addCommas(stats.rscore)}</td>
                     </tr>
                     <tr>
-                      <td>Total score</td>
+                      <td>{t("profile.stats.totalScore")}</td>
                       <td>{addCommas(stats.tscore)}</td>
                     </tr>
                     <tr>
-                      <td>Max combo</td>
+                      <td>{t("profile.stats.maxCombo")}</td>
                       <td>{addCommas(stats.max_combo)}x</td>
                     </tr>
                     <tr>
-                      <td>Playcount</td>
+                      <td>{t("profile.stats.playcount")}</td>
                       <td>{addCommas(stats.plays)}</td>
                     </tr>
                     <tr>
-                      <td>Playtime</td>
+                      <td>{t("profile.stats.playtime")}</td>
                       <td>{secondsToDhm(stats.playtime)}</td>
                     </tr>
                     <tr>
-                      <td>Accuracy</td>
+                      <td>{t("profile.stats.accuracy")}</td>
                       <td>{stats.acc.toFixed(2)}%</td>
                     </tr>
                     <tr>
-                      <td>Total hits</td>
+                      <td>{t("profile.stats.totalHits")}</td>
                       <td>{addCommas(stats.total_hits)}</td>
                     </tr>
                     <tr>
-                      <td>Replays watched</td>
+                      <td>{t("profile.stats.replaysWatched")}</td>
                       <td>{addCommas(stats.replay_views)}</td>
                     </tr>
                     <tr>
-                      <td>Registered</td>
+                      <td>{t("profile.stats.registered")}</td>
                       <td>{formatDate(info.creation_time)}</td>
                     </tr>
                   </tbody>
                 </table>
+              </div>
+            )}
+
+            {userBadges.length > 0 && (
+              <div
+                style={{
+                  background: "#1e1e2a",
+                  border: "1px solid #3a3a4e",
+                  borderRadius: "8px",
+                  overflow: "hidden",
+                }}
+              >
+                <div className="block-header">
+                  <span className="block-icon"><BadgesIcon /></span>
+                  Badges
+                </div>
+                <div style={{ padding: "0.75rem 1rem", display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+                  {userBadges.map((b) => (
+                    <BadgeChip key={b.id} badge={b} />
+                  ))}
+                </div>
               </div>
             )}
 
@@ -434,7 +466,7 @@ export default function ProfilePage() {
                   <span className="block-icon">
                     <StarIcon />
                   </span>
-                  Grades
+                  {t("profile.grades")}
                 </div>
                 <div
                   style={{
@@ -488,14 +520,14 @@ export default function ProfilePage() {
                       className="up-bio-edit-btn"
                       onClick={() => { setBioValue(info.userpage_content ?? ""); setBioEdit(true); }}
                     >
-                      {info.userpage_content ? "Edit" : "+ Add bio"}
+                      {info.userpage_content ? t("profile.userpage.edit") : "+ Add bio"}
                     </button>
                   )}
                 </div>
                 {bioEdit ? (
                   <div className="up-bio-editor">
                     <div className="up-bio-tabs">
-                      <span className="up-bio-tab-label">Write</span>
+                      <span className="up-bio-tab-label">{t("profile.userpage.write")}</span>
                     </div>
                     <textarea
                       className="up-bio-textarea"
@@ -507,7 +539,7 @@ export default function ProfilePage() {
                     />
                     {bioValue && (
                       <>
-                        <div className="up-bio-preview-label">Preview</div>
+                        <div className="up-bio-preview-label">{t("profile.userpage.preview")}</div>
                         <div
                           className="up-bio-preview"
                           dangerouslySetInnerHTML={{ __html: renderBBCode(bioValue) }}
@@ -516,9 +548,9 @@ export default function ProfilePage() {
                     )}
                     <div className="up-bio-editor-actions">
                       <span className="up-bio-charcount">{bioValue.length}/2000</span>
-                      <button className="up-bio-cancel-btn" onClick={() => setBioEdit(false)}>Cancel</button>
+                      <button className="up-bio-cancel-btn" onClick={() => setBioEdit(false)}>{t("profile.userpage.cancel")}</button>
                       <button className="up-bio-save-btn" onClick={saveBio} disabled={bioSaving}>
-                        {bioSaving ? "Saving…" : "Save"}
+                        {bioSaving ? t("profile.userpage.saving") : t("profile.userpage.save")}
                       </button>
                     </div>
                   </div>
@@ -565,7 +597,7 @@ export default function ProfilePage() {
                       transition: "all 0.15s",
                     }}
                   >
-                    {tab === "maps" ? "Most Played" : `${tab.charAt(0).toUpperCase() + tab.slice(1)} Scores`}
+                    {tab === "best" ? t("profile.tabs.best") : tab === "recent" ? t("profile.tabs.recent") : t("profile.tabs.mostPlayed")}
                   </button>
                 ))}
               </div>
@@ -581,7 +613,7 @@ export default function ProfilePage() {
                         fontSize: "0.9rem",
                       }}
                     >
-                      No scores available.
+                      {t("profile.scores.noScores")}
                     </div>
                   ) : (
                     currentScores.map((score) => (
@@ -600,7 +632,7 @@ export default function ProfilePage() {
                         fontSize: "0.9rem",
                       }}
                     >
-                      No maps played.
+                      {t("profile.scores.noMostPlayed")}
                     </div>
                   ) : (
                     mostPlayed.map((map) => (
@@ -621,7 +653,7 @@ export default function ProfilePage() {
         {/* ── Comments Section ── */}
         <div className="up-comments-section">
           <div className="up-comments-header">
-            <span className="up-comments-title">Comments</span>
+            <span className="up-comments-title">{t("profile.comments.title")}</span>
             <span className="up-comments-count">{comments.length}</span>
           </div>
 
@@ -629,7 +661,7 @@ export default function ProfilePage() {
             <div className="up-comment-form">
               <textarea
                 className="up-comment-textarea"
-                placeholder="Leave a comment…"
+                placeholder={t("profile.comments.placeholder")}
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
                 maxLength={1000}
@@ -642,14 +674,14 @@ export default function ProfilePage() {
                   onClick={postComment}
                   disabled={commentPosting || !commentText.trim()}
                 >
-                  {commentPosting ? "Posting…" : "Post comment"}
+                  {commentPosting ? t("profile.comments.posting") : t("profile.comments.post")}
                 </button>
               </div>
             </div>
           )}
 
           {comments.length === 0 ? (
-            <div className="up-comments-empty">No comments yet.</div>
+            <div className="up-comments-empty">{t("profile.comments.noComments")}</div>
           ) : (
             <div className="up-comments-list">
               {comments.map((c) => (
@@ -690,6 +722,7 @@ export default function ProfilePage() {
 const MONTH_ABBR = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
 function PlaycountGraph({ activity }: { activity: { yr: number; mo: number; plays: number }[] }) {
+  const t = useT();
   const now = new Date();
 
   const endDate    = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -721,8 +754,8 @@ function PlaycountGraph({ activity }: { activity: { yr: number; mo: number; play
   return (
     <div className="up-graph-block">
       <div className="up-graph-header">
-        <span className="up-graph-title">Play History</span>
-        <span className="up-graph-sub">Submitted scores · all time</span>
+        <span className="up-graph-title">{t("profile.playcountGraph.title")}</span>
+        <span className="up-graph-sub">{t("profile.playcountGraph.subtitle")}</span>
       </div>
       <ResponsiveContainer width="100%" height={160}>
         <LineChart data={slots} margin={{ top: 10, right: 12, left: -24, bottom: 0 }}>
@@ -944,6 +977,15 @@ function StarIcon() {
   return (
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+    </svg>
+  );
+}
+
+function BadgesIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="12" cy="8" r="6" />
+      <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
     </svg>
   );
 }

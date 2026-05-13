@@ -9,6 +9,7 @@ import { getClan, type ClanDetail, type ClanMember } from "@/lib/api";
 import { addCommas, modeToInt, formatDate } from "@/lib/utils";
 import ModeSelector from "@/components/ModeSelector";
 import { uploadClanAvatar, updateClan, invitePlayer, kickMember } from "./actions";
+import { useT } from "@/i18n";
 
 const PRIV_LABEL: Record<number, string> = { 1: "Member", 2: "Officer", 3: "Owner" };
 
@@ -72,6 +73,7 @@ function RankBadge({ rank }: { rank: number }) {
 }
 
 export default function ClanPage() {
+  const t = useT();
   const { id } = useParams<{ id: string }>();
   const clanId = parseInt(id, 10);
 
@@ -195,7 +197,7 @@ export default function ClanPage() {
   if (notFound) {
     return (
       <div className="cd-page">
-        <div className="cd-notfound">Clan not found.</div>
+        <div className="cd-notfound">{t("clanDetail.notFound")}</div>
       </div>
     );
   }
@@ -240,7 +242,7 @@ export default function ClanPage() {
                   <span className="cd-banner__tag">[{clan.tag}]</span>
                   <span className="cd-banner__name">{clan.name}</span>
                   {isOwner && (
-                    <button className="cd-banner__edit-btn" onClick={() => setEditOpen((v) => !v)}>Edit</button>
+                    <button className="cd-banner__edit-btn" onClick={() => setEditOpen((v) => !v)}>{t("clanDetail.edit")}</button>
                   )}
                 </div>
                 <div className="cd-banner__meta">
@@ -256,7 +258,7 @@ export default function ClanPage() {
                 </div>
               </>
             ) : (
-              <div className="cd-loading">Loading...</div>
+              <div className="cd-loading">{t("clanDetail.loading")}</div>
             )}
           </div>
 
@@ -271,13 +273,13 @@ export default function ClanPage() {
             className={`cd-tab ${activeTab === "info" ? "cd-tab--active" : ""}`}
             onClick={() => setActiveTab("info")}
           >
-            info
+            {t("clanDetail.tabs.info")}
           </button>
           <button
             className={`cd-tab ${activeTab === "leaderboard" ? "cd-tab--active" : ""}`}
             onClick={() => setActiveTab("leaderboard")}
           >
-            leaderboard
+            {t("clanDetail.tabs.leaderboard")}
           </button>
         </div>
       </div>
@@ -299,22 +301,22 @@ export default function ClanPage() {
             <div className="cd-info-card">
               <div className="cd-info-entries">
                 <div className="cd-info-entry">
-                  <span className="cd-info-label">Owner</span>
+                  <span className="cd-info-label">{t("clanDetail.info.owner")}</span>
                   <span className="cd-info-value">
                     <Link href={`/u/${clan?.owner_id}`} className="cd-banner__owner">{clan?.owner_name ?? "—"}</Link>
                   </span>
                 </div>
                 <div className="cd-info-entry">
-                  <span className="cd-info-label">Members</span>
+                  <span className="cd-info-label">{t("clanDetail.info.members")}</span>
                   <span className="cd-info-value cd-info-value--large">{members.length}</span>
                 </div>
                 <div className="cd-info-entry">
-                  <span className="cd-info-label">Top PP</span>
+                  <span className="cd-info-label">{t("clanDetail.info.topPp")}</span>
                   <span className="cd-info-value cd-info-value--pp">{addCommas(topPP)}pp</span>
                 </div>
                 {clan?.created_at && (
                   <div className="cd-info-entry">
-                    <span className="cd-info-label">Founded</span>
+                    <span className="cd-info-label">{t("clanDetail.info.founded")}</span>
                     <span className="cd-info-value">{formatDate(new Date(clan.created_at).getTime() / 1000)}</span>
                   </div>
                 )}
@@ -327,13 +329,13 @@ export default function ClanPage() {
               {/* About / BBCode panel */}
               <div className="cd-about">
                 <div className="cd-about__header">
-                  <span className="cd-section-title" style={{ marginBottom: 0 }}>About</span>
+                  <span className="cd-section-title" style={{ marginBottom: 0 }}>{t("clanDetail.about.title")}</span>
                   {isOwner && !aboutEditOpen && (
                     <button
                       className="cd-about__edit-btn"
                       onClick={() => { setAboutDraft(clan?.description ?? ""); setAboutEditOpen(true); setAboutTab("write"); }}
                     >
-                      {clan?.description ? "Edit" : "+ Add description"}
+                      {clan?.description ? t("clanDetail.about.edit") : t("clanDetail.about.addDescription")}
                     </button>
                   )}
                 </div>
@@ -344,11 +346,11 @@ export default function ClanPage() {
                       <button
                         className={`cd-editor-tab ${aboutTab === "write" ? "cd-editor-tab--active" : ""}`}
                         onClick={() => setAboutTab("write")}
-                      >Write</button>
+                      >{t("clanDetail.about.write")}</button>
                       <button
                         className={`cd-editor-tab ${aboutTab === "preview" ? "cd-editor-tab--active" : ""}`}
                         onClick={() => setAboutTab("preview")}
-                      >Preview</button>
+                      >{t("clanDetail.about.preview")}</button>
                       <a
                         href="https://osu.ppy.sh/wiki/en/BBCode"
                         target="_blank"
@@ -376,8 +378,8 @@ export default function ClanPage() {
                     )}
 
                     <div className="cd-edit-actions" style={{ marginTop: "0.6rem" }}>
-                      <button className="cd-save-btn" onClick={handleAboutSave}>Save</button>
-                      <button className="cd-cancel-btn" onClick={() => setAboutEditOpen(false)}>Cancel</button>
+                      <button className="cd-save-btn" onClick={handleAboutSave}>{t("clanDetail.editPanel.save")}</button>
+                      <button className="cd-cancel-btn" onClick={() => setAboutEditOpen(false)}>{t("clanDetail.editPanel.cancel")}</button>
                       <span className="cd-char-count">{aboutDraft.length}/2000</span>
                     </div>
                     <Msg msg={aboutMsg} />
@@ -385,7 +387,7 @@ export default function ClanPage() {
                 ) : (
                   clan?.description
                     ? <BBCodeRenderer text={clan.description} />
-                    : <p className="cd-about__empty">{isOwner ? "No description yet. Click \"+ Add description\" to write one." : "No description provided."}</p>
+                    : <p className="cd-about__empty">{isOwner ? t("clanDetail.about.noDescriptionOwner") : t("clanDetail.about.noDescription")}</p>
                 )}
               </div>
 
@@ -394,30 +396,30 @@ export default function ClanPage() {
                 <>
                   {editOpen && (
                     <div className="cd-edit-panel">
-                      <div className="cd-edit-title">Edit Clan Name</div>
+                      <div className="cd-edit-title">{t("clanDetail.editPanel.title")}</div>
                       <div className="cd-edit-row">
-                        <label className="cd-edit-label">Name</label>
+                        <label className="cd-edit-label">{t("clanDetail.editPanel.name")}</label>
                         <input className="cd-edit-input" value={editName} onChange={(e) => setEditName(e.target.value)} maxLength={16} />
                       </div>
                       <div className="cd-edit-actions">
-                        <button className="cd-save-btn" onClick={handleEditSave}>Save</button>
-                        <button className="cd-cancel-btn" onClick={() => setEditOpen(false)}>Cancel</button>
+                        <button className="cd-save-btn" onClick={handleEditSave}>{t("clanDetail.editPanel.save")}</button>
+                        <button className="cd-cancel-btn" onClick={() => setEditOpen(false)}>{t("clanDetail.editPanel.cancel")}</button>
                       </div>
                       <Msg msg={editMsg} />
                     </div>
                   )}
 
                   <div className="cd-invite-panel">
-                    <div className="cd-edit-title">Invite Player</div>
+                    <div className="cd-edit-title">{t("clanDetail.invite.title")}</div>
                     <div className="cd-invite-row">
                       <input
                         className="cd-edit-input"
-                        placeholder="Username or ID"
+                        placeholder={t("clanDetail.invite.placeholder")}
                         value={inviteTarget}
                         onChange={(e) => setInvite(e.target.value)}
                         onKeyDown={(e) => { if (e.key === "Enter") handleInvite(); }}
                       />
-                      <button className="cd-invite-btn" onClick={handleInvite}>Invite</button>
+                      <button className="cd-invite-btn" onClick={handleInvite}>{t("clanDetail.invite.button")}</button>
                     </div>
                     <Msg msg={inviteMsg} />
                   </div>
@@ -435,16 +437,16 @@ export default function ClanPage() {
                 <tr>
                   <th className="cd-th cd-th-rank">#</th>
                   <th className="cd-th">Player</th>
-                  <th className="cd-th cd-th-role">Role</th>
-                  <th className="cd-th cd-th-pp">Performance</th>
-                  <th className="cd-th cd-th-acc">Accuracy</th>
-                  <th className="cd-th cd-th-plays">Plays</th>
+                  <th className="cd-th cd-th-role">{t("clans.columns.role")}</th>
+                  <th className="cd-th cd-th-pp">{t("clans.columns.performance")}</th>
+                  <th className="cd-th cd-th-acc">{t("clans.columns.accuracy")}</th>
+                  <th className="cd-th cd-th-plays">{t("clans.columns.plays")}</th>
                   {isOwner && <th className="cd-th cd-th-kick" />}
                 </tr>
               </thead>
               <tbody>
                 {members.length === 0 ? (
-                  <tr><td colSpan={isOwner ? 7 : 6} className="cd-empty">No members found.</td></tr>
+                  <tr><td colSpan={isOwner ? 7 : 6} className="cd-empty">{t("clanDetail.noMembers")}</td></tr>
                 ) : (
                   members.map((m, i) => (
                     <tr key={m.id} className="cd-row">
@@ -476,8 +478,8 @@ export default function ClanPage() {
                           {m.id !== meId && (
                             kickConfirm === m.id ? (
                               <span className="cd-kick-confirm">
-                                <button className="cd-kick-yes" onClick={() => handleKick(m.id)}>Kick</button>
-                                <button className="cd-kick-no" onClick={() => setKickConfirm(null)}>No</button>
+                                <button className="cd-kick-yes" onClick={() => handleKick(m.id)}>{t("clanDetail.kick")}</button>
+                                <button className="cd-kick-no" onClick={() => setKickConfirm(null)}>{t("clanDetail.kickNo")}</button>
                               </span>
                             ) : (
                               <button className="cd-kick-btn" onClick={() => setKickConfirm(m.id)}>✕</button>

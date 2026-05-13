@@ -6,14 +6,19 @@ import { useRouter } from "next/navigation";
 import { searchPlayers } from "@/lib/api";
 import { logoutAction } from "@/app/logout/actions";
 import NotificationBell from "@/components/NotificationBell";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useT } from "@/i18n";
 import type { SessionUser } from "@/lib/session";
 
 export default function Header({ user }: { user: SessionUser | null }) {
+  const t = useT();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<{ id: number; name: string }[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const moreRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -61,6 +66,16 @@ export default function Header({ user }: { user: SessionUser | null }) {
     };
   }, [searchOpen]);
 
+  useEffect(() => {
+    function handleOutside(e: MouseEvent) {
+      if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
+        setMoreOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleOutside);
+    return () => document.removeEventListener("mousedown", handleOutside);
+  }, []);
+
   return (
     <nav
       style={{
@@ -101,10 +116,37 @@ export default function Header({ user }: { user: SessionUser | null }) {
         </Link>
 
         <div style={{ display: "flex", gap: "0.25rem", alignItems: "center" }}>
-          <NavLink href="/">Home</NavLink>
-          <NavLink href="/leaderboard">Leaderboard</NavLink>
-          <NavLink href="/beatmaps">Beatmaps</NavLink>
-          <NavLink href="/clans">Clans</NavLink>
+          <NavLink href="/leaderboard">{t("nav.leaderboard")}</NavLink>
+          <NavLink href="/beatmaps">{t("nav.beatmaps")}</NavLink>
+          <NavLink href="/clans">{t("nav.clans")}</NavLink>
+
+          {/* More dropdown */}
+          <div ref={moreRef} style={{ position: "relative" }}>
+            <button
+              className="nav-more-btn"
+              onClick={() => setMoreOpen((v) => !v)}
+              aria-expanded={moreOpen}
+            >
+              {t("nav.more")}
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+                style={{ transform: moreOpen ? "rotate(180deg)" : "none", transition: "transform 0.15s" }}>
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            </button>
+            {moreOpen && (
+              <div className="nav-more-dropdown">
+                <Link href="/top-plays" className="nav-more-item" onClick={() => setMoreOpen(false)}>
+                  {t("nav.topPlays")}
+                </Link>
+                <Link href="/contributors" className="nav-more-item" onClick={() => setMoreOpen(false)}>
+                  {t("nav.contributors")}
+                </Link>
+                <Link href="/welcome" className="nav-more-item" onClick={() => setMoreOpen(false)}>
+                  {t("nav.client")}
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
 
         <div style={{ flex: 1 }} />
@@ -118,7 +160,7 @@ export default function Header({ user }: { user: SessionUser | null }) {
             <button
               className="nav-search-icon-btn"
               onClick={searchOpen ? closeSearch : openSearch}
-              aria-label={searchOpen ? "Close search" : "Search players"}
+              aria-label={searchOpen ? t("nav.closeSearch") : t("nav.openSearch")}
             >
               {searchOpen ? (
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M18 6 6 18M6 6l12 12"/></svg>
@@ -132,7 +174,7 @@ export default function Header({ user }: { user: SessionUser | null }) {
               <input
                 ref={inputRef}
                 type="text"
-                placeholder="Search players..."
+                placeholder={t("nav.searchPlaceholder")}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => {
@@ -174,7 +216,7 @@ export default function Header({ user }: { user: SessionUser | null }) {
             {user ? (
               <>
                 {!!(user.priv & ((1 << 12) | (1 << 13) | (1 << 14))) && (
-                  <Link href="/staff" className="staff-nav-btn">Staff</Link>
+                  <Link href="/staff" className="staff-nav-btn">{t("nav.staff")}</Link>
                 )}
                 <NotificationBell userId={user.id} />
                 <Link
@@ -190,22 +232,23 @@ export default function Header({ user }: { user: SessionUser | null }) {
                 </Link>
                 <form action={logoutAction}>
                   <button type="submit" style={{ background: "none", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "4px", color: "rgba(255,255,255,0.45)", fontSize: "0.78rem", padding: "0.25rem 0.6rem", cursor: "pointer" }}>
-                    Sign out
+                    {t("nav.signOut")}
                   </button>
                 </form>
               </>
             ) : (
               <>
                 <Link href="/login" style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.875rem", padding: "0.3rem 0.65rem", borderRadius: "4px", border: "1px solid rgba(255,255,255,0.12)" }}>
-                  Sign in
+                  {t("nav.signIn")}
                 </Link>
                 <Link href="/register" style={{ background: "#d55b9e", color: "#fff", fontSize: "0.875rem", padding: "0.3rem 0.65rem", borderRadius: "4px", fontWeight: 600 }}>
-                  Register
+                  {t("nav.register")}
                 </Link>
               </>
             )}
           </div>
 
+        <LanguageSwitcher />
         </div>
       </div>
     </nav>

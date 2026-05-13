@@ -5,10 +5,12 @@ import Link from "next/link";
 import { getClans, type ClanEntry } from "@/lib/api";
 import { addCommas, modeToInt } from "@/lib/utils";
 import ModeSelector from "@/components/ModeSelector";
+import { useT } from "@/i18n";
 
 const PER_PAGE = 50;
 
 export default function ClansPage() {
+  const t = useT();
   const [mode, setMode]       = useState("osu!");
   const [mods, setMods]       = useState("Vanilla");
   const [page, setPage]       = useState(1);
@@ -38,7 +40,7 @@ export default function ClansPage() {
     <div className="cl-page">
       <div className="container-main">
         <div className="cl-header">
-          <h1 className="cl-title">Clan Leaderboard</h1>
+          <h1 className="cl-title">{t("clans.title")}</h1>
           <ModeSelector mode={mode} mods={mods} onChange={handleMode} />
         </div>
 
@@ -46,21 +48,21 @@ export default function ClansPage() {
           <table className="cl-table">
             <thead>
               <tr>
-                <th className="cl-th cl-th-rank">#</th>
-                <th className="cl-th cl-th-name">Clan</th>
-                <th className="cl-th cl-th-owner">Owner</th>
-                <th className="cl-th cl-th-members">Members</th>
-                <th className="cl-th cl-th-pp">Total PP</th>
+                <th className="cl-th cl-th-rank">{t("clans.columns.rank")}</th>
+                <th className="cl-th cl-th-name">{t("clans.columns.clan")}</th>
+                <th className="cl-th cl-th-owner">{t("clans.columns.owner")}</th>
+                <th className="cl-th cl-th-members">{t("clans.columns.members")}</th>
+                <th className="cl-th cl-th-pp">{t("clans.columns.totalPp")}</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={5} className="cl-empty">Loading...</td>
+                  <td colSpan={5} className="cl-empty">{t("clans.loading")}</td>
                 </tr>
               ) : clans.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="cl-empty">No clans found.</td>
+                  <td colSpan={5} className="cl-empty">{t("clans.noClans")}</td>
                 </tr>
               ) : (
                 clans.map((clan, i) => (
@@ -93,17 +95,17 @@ export default function ClansPage() {
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1 || loading}
             >
-              ‹ Prev
+              {t("clans.prev")}
             </button>
             <span className="cl-page-info">
-              Page {page} of {totalPages}
+              {t("clans.pageOf", { n: page, total: totalPages })}
             </span>
             <button
               className="cl-page-btn"
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages || loading}
             >
-              Next ›
+              {t("clans.next")}
             </button>
           </div>
         )}

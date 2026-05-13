@@ -3,11 +3,13 @@
 import { useActionState, useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { loginAction, forgotPasswordAction, type LoginState, type ForgotState } from "./actions";
+import { useT } from "@/i18n";
 
 const initLogin: LoginState = {};
 const initForgot: ForgotState = {};
 
 export default function LoginPage() {
+  const t = useT();
   const [state, action, pending] = useActionState(loginAction, initLogin);
   const [forgotState, forgotAction, forgotPending] = useActionState(forgotPasswordAction, initForgot);
 
@@ -23,17 +25,17 @@ export default function LoginPage() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <h1 className="auth-title">Sign in</h1>
+        <h1 className="auth-title">{t("login.title")}</h1>
         <p className="auth-sub">
-          Don&apos;t have an account?{" "}
-          <Link href="/register" className="auth-link">Register</Link>
+          {t("login.noAccount")}{" "}
+          <Link href="/register" className="auth-link">{t("login.register")}</Link>
         </p>
 
         {state.error && <div className="auth-error">{state.error}</div>}
 
         <form action={action} className="auth-form">
           <div className="auth-field">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">{t("login.username")}</label>
             <input
               id="username"
               name="username"
@@ -45,7 +47,7 @@ export default function LoginPage() {
           </div>
 
           <div className="auth-field">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">{t("login.password")}</label>
             <input
               id="password"
               name="password"
@@ -56,7 +58,7 @@ export default function LoginPage() {
           </div>
 
           <button type="submit" className="auth-btn" disabled={pending}>
-            {pending ? "Signing in…" : "Sign in"}
+            {pending ? t("login.submitting") : t("login.submit")}
           </button>
         </form>
 
@@ -65,7 +67,7 @@ export default function LoginPage() {
           className="auth-forgot-link"
           onClick={() => setModalOpen(true)}
         >
-          Forgot my password
+          {t("login.forgotPassword")}
         </button>
       </div>
 
@@ -77,21 +79,16 @@ export default function LoginPage() {
 
             {forgotState.success ? (
               <>
-                <h2 className="fp-title">Check your email</h2>
-                <p className="fp-desc">
-                  If an account with that username or email exists, we&apos;ve sent a
-                  password reset link to the associated address. It expires in&nbsp;1&nbsp;hour.
-                </p>
+                <h2 className="fp-title">{t("login.resetModal.successTitle")}</h2>
+                <p className="fp-desc">{t("login.resetModal.successDesc")}</p>
                 <button className="auth-btn" style={{ marginTop: "1rem" }} onClick={closeModal}>
-                  Close
+                  {t("login.resetModal.close")}
                 </button>
               </>
             ) : (
               <>
-                <h2 className="fp-title">Reset password</h2>
-                <p className="fp-desc">
-                  Enter your username or email and we&apos;ll send you a link to reset your password.
-                </p>
+                <h2 className="fp-title">{t("login.resetModal.title")}</h2>
+                <p className="fp-desc">{t("login.resetModal.description")}</p>
 
                 {forgotState.error && (
                   <div className="auth-error">{forgotState.error}</div>
@@ -99,7 +96,7 @@ export default function LoginPage() {
 
                 <form action={forgotAction} className="auth-form">
                   <div className="auth-field">
-                    <label htmlFor="username_or_email">Username or email</label>
+                    <label htmlFor="username_or_email">{t("login.resetModal.usernameOrEmail")}</label>
                     <input
                       ref={inputRef}
                       id="username_or_email"
@@ -110,7 +107,7 @@ export default function LoginPage() {
                     />
                   </div>
                   <button type="submit" className="auth-btn" disabled={forgotPending}>
-                    {forgotPending ? "Sending…" : "Send reset link"}
+                    {forgotPending ? t("login.resetModal.sending") : t("login.resetModal.send")}
                   </button>
                 </form>
               </>

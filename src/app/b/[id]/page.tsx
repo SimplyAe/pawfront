@@ -20,10 +20,12 @@ import {
   timeAgo,
 } from "@/lib/utils";
 import GradeImage from "@/components/GradeImage";
+import { useT } from "@/i18n";
 
 type ScoreWithPlayer = Score & { userid?: number; player_name?: string };
 
 export default function BeatmapPage() {
+  const t = useT();
   const params = useParams();
   const mapId = Number(params.id);
 
@@ -60,10 +62,10 @@ export default function BeatmapPage() {
   }
 
   if (loading) {
-    return <div className="bmap-loading">Loading beatmap...</div>;
+    return <div className="bmap-loading">{t("beatmap.loading")}</div>;
   }
   if (!map) {
-    return <div className="bmap-loading">Beatmap not found.</div>;
+    return <div className="bmap-loading">{t("beatmap.notFound")}</div>;
   }
 
   const status = mapStatus(map.status);
@@ -104,7 +106,7 @@ export default function BeatmapPage() {
 
             {/* Mapper line */}
             <div className="bmap-mapper-line">
-              mapped by <span className="bmap-mapper-name">{map.creator}</span>
+              {t("beatmap.mappedBy", { name: map.creator })}
             </div>
 
             {/* Play count + passes */}
@@ -116,7 +118,7 @@ export default function BeatmapPage() {
               <span className="bmap-meta-sep">·</span>
               <span className="bmap-meta-item">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                {addCommas(map.passes)} passes
+                {t("beatmap.passes", { n: addCommas(map.passes) })}
               </span>
             </div>
 
@@ -132,7 +134,7 @@ export default function BeatmapPage() {
                 rel="noopener noreferrer"
                 className="bmap-action-btn"
               >
-                View on osu.ppy.sh
+                {t("beatmap.viewOnOsu")}
               </a>
             </div>
           </div>
@@ -148,26 +150,26 @@ export default function BeatmapPage() {
 
             <div className="bmap-qs-row">
               <div className="bmap-qs-cell">
-                <span className="bmap-qs-label">Length</span>
+                <span className="bmap-qs-label">{t("beatmap.stats.length")}</span>
                 <span className="bmap-qs-val">{formatLength(map.total_length)}</span>
               </div>
               <div className="bmap-qs-cell">
-                <span className="bmap-qs-label">BPM</span>
+                <span className="bmap-qs-label">{t("beatmap.stats.bpm")}</span>
                 <span className="bmap-qs-val">{map.bpm.toFixed(0)}</span>
               </div>
               <div className="bmap-qs-cell">
-                <span className="bmap-qs-label">Max Combo</span>
+                <span className="bmap-qs-label">{t("beatmap.stats.maxCombo")}</span>
                 <span className="bmap-qs-val">{addCommas(map.max_combo)}x</span>
               </div>
             </div>
 
             <div className="bmap-stat-bars">
               {([
-                { label: "Circle Size",   val: map.cs,   max: 10 },
-                { label: "HP Drain",      val: map.hp,   max: 10 },
-                { label: "Accuracy",      val: map.od,   max: 10 },
-                { label: "Approach Rate", val: map.ar,   max: 10 },
-                { label: "Star Rating",   val: map.diff, max: 10, color: diffColor(map.diff) },
+                { label: t("beatmap.stats.circleSize"),   val: map.cs,   max: 10 },
+                { label: t("beatmap.stats.hpDrain"),      val: map.hp,   max: 10 },
+                { label: t("beatmap.stats.accuracy"),      val: map.od,   max: 10 },
+                { label: t("beatmap.stats.approachRate"), val: map.ar,   max: 10 },
+                { label: t("beatmap.stats.starRating"),   val: map.diff, max: 10, color: diffColor(map.diff) },
               ] as { label: string; val: number; max: number; color?: string }[]).map(({ label, val, max, color }) => (
                 <div key={label} className="bmap-bar-row">
                   <span className="bmap-bar-label">{label}</span>
@@ -191,7 +193,7 @@ export default function BeatmapPage() {
       {/* ── DIFF NAVIGATOR ── */}
       {sortedDiffs.length > 1 && (
         <div className="bmap-diffnav container-main">
-          <div className="bmap-diffnav-label">Difficulties</div>
+          <div className="bmap-diffnav-label">{t("beatmap.difficulties")}</div>
           <div className="bmap-diffnav-list">
             {sortedDiffs.map((d) => {
               const col = diffColor(d.diff);
@@ -220,12 +222,12 @@ export default function BeatmapPage() {
         <div className="bmap-board">
 
           <div className="bmap-board-hdr">
-            <span className="bmap-board-title">Leaderboard</span>
-            {scoresLoading && <span className="bmap-board-loading">Loading...</span>}
+            <span className="bmap-board-title">{t("beatmap.board.title")}</span>
+            {scoresLoading && <span className="bmap-board-loading">{t("beatmap.board.loading")}</span>}
           </div>
 
           {!scoresLoading && scores.length === 0 && (
-            <div className="bmap-board-empty">No scores on this difficulty yet.</div>
+            <div className="bmap-board-empty">{t("beatmap.noScores")}</div>
           )}
 
           {scores.length > 0 && (
@@ -233,19 +235,19 @@ export default function BeatmapPage() {
               <table className="bmap-table">
                 <thead>
                   <tr className="bmap-thead-row">
-                    <th className="bmap-th bmap-th--rank">#</th>
-                    <th className="bmap-th bmap-th--grade">Grade</th>
-                    <th className="bmap-th bmap-th--score">Score</th>
-                    <th className="bmap-th bmap-th--acc">Accuracy</th>
-                    <th className="bmap-th bmap-th--player">Player</th>
-                    <th className="bmap-th bmap-th--combo">Combo</th>
+                    <th className="bmap-th bmap-th--rank">{t("beatmap.board.rank")}</th>
+                    <th className="bmap-th bmap-th--grade">{t("beatmap.board.grade")}</th>
+                    <th className="bmap-th bmap-th--score">{t("beatmap.board.score")}</th>
+                    <th className="bmap-th bmap-th--acc">{t("beatmap.board.accuracy")}</th>
+                    <th className="bmap-th bmap-th--player">{t("beatmap.board.player")}</th>
+                    <th className="bmap-th bmap-th--combo">{t("beatmap.board.combo")}</th>
                     <th className="bmap-th bmap-th--hit" style={{ color: "#90caf9" }}>300</th>
                     <th className="bmap-th bmap-th--hit" style={{ color: "#80deea" }}>100</th>
                     <th className="bmap-th bmap-th--hit" style={{ color: "#ffcc80" }}>50</th>
                     <th className="bmap-th bmap-th--hit" style={{ color: "#ef9a9a" }}>Miss</th>
-                    <th className="bmap-th bmap-th--pp">PP</th>
-                    <th className="bmap-th bmap-th--time">Time</th>
-                    <th className="bmap-th bmap-th--mods">Mods</th>
+                    <th className="bmap-th bmap-th--pp">{t("beatmap.board.pp")}</th>
+                    <th className="bmap-th bmap-th--time">{t("beatmap.board.time")}</th>
+                    <th className="bmap-th bmap-th--mods">{t("beatmap.board.mods")}</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -1,0 +1,391 @@
+{
+  "nav": {
+    "home": "Home",
+    "leaderboard": "Ranglijst",
+    "beatmaps": "Beatmaps",
+    "clans": "Clans",
+    "contributors": "Bijdragers",
+    "more": "Meer",
+    "topPlays": "Beste PP-plays",
+    "staff": "Staff",
+    "signIn": "Inloggen",
+    "signOut": "Uitloggen",
+    "register": "Registreren",
+    "searchPlaceholder": "Spelers zoeken...",
+    "closeSearch": "Zoeken sluiten",
+    "openSearch": "Spelers zoeken"
+  },
+  "footer": {
+    "tagline": "een osu! privéserver",
+    "leaderboard": "ranglijst"
+  },
+  "home": {
+    "totalUsers": "totaal aantal gebruikers",
+    "online": "online",
+    "tagline1": "Een heropleving van de geliefde osu!atoka privéserver.",
+    "tagline2": "We hebben een custom client die exclusief voor deze server is gemaakt.",
+    "tagline3": "Soepelere regels — sommige cheats zijn toegestaan.",
+    "topPpPlays": "Beste PP-plays",
+    "staff": "Staff",
+    "topPlayers": "Beste spelers — osu! (Vanilla)",
+    "viewAll": "Alles bekijken",
+    "recentScores": "Recente scores",
+    "stats": {
+      "onlineRegistered": "Online / Geregistreerd",
+      "latestPlayer": "Nieuwste speler",
+      "submittedScores": "Ingediende scores",
+      "restrictedPlayers": "Beperkte spelers",
+      "topScore": "Beste score",
+      "doneBy": "Gedaan door {name}",
+      "totalPp": "Totale PP"
+    }
+  },
+  "leaderboard": {
+    "title": "Ranglijst",
+    "countryPlaceholder": "Land (bijv. NL)",
+    "loading": "Laden...",
+    "noPlayers": "Geen spelers om weer te geven.",
+    "prev": "Vorige",
+    "next": "Volgende",
+    "page": "Pagina {n}",
+    "sort": {
+      "performance": "Prestatie",
+      "rankedScore": "Ranked score",
+      "totalScore": "Totale score",
+      "accuracy": "Nauwkeurigheid",
+      "playCount": "Aantal plays",
+      "playtime": "Speeltijd"
+    },
+    "columns": {
+      "rank": "#",
+      "player": "Speler",
+      "pp": "PP",
+      "score": "Score",
+      "accuracy": "Nauwkeurigheid",
+      "playcount": "Playcount",
+      "maxCombo": "Max combo"
+    }
+  },
+  "topPlays": {
+    "title": "Beste PP-plays",
+    "subtitle": "Beste scores op de server · gesorteerd op pp",
+    "loading": "Laden…",
+    "noScores": "Geen scores gevonden voor deze modus.",
+    "prev": "← Vorige",
+    "next": "Volgende →",
+    "fc": "FC",
+    "miss": "{n} misser",
+    "misses": "{n} missers"
+  },
+  "beatmaps": {
+    "searchPlaceholder": "typ zoekwoorden...",
+    "loading": "Laden...",
+    "noResults": "Geen beatmaps gevonden.",
+    "results": "{n} beatmapsets",
+    "mappedBy": "gemapt door {name}",
+    "prev": "‹ Vorige",
+    "next": "Volgende ›",
+    "status": {
+      "label": "Status",
+      "any": "Alle",
+      "ranked": "Ranked",
+      "approved": "Approved",
+      "loved": "Loved",
+      "qualified": "Qualified",
+      "pending": "In afwachting",
+      "graveyard": "Graveyard"
+    },
+    "mode": {
+      "label": "Modus",
+      "any": "Alle"
+    },
+    "sort": {
+      "label": "Sorteren op",
+      "plays": "Plays",
+      "difficulty": "Moeilijkheid",
+      "title": "Titel",
+      "artist": "Artiest"
+    }
+  },
+  "profile": {
+    "online": "Online",
+    "offline": "Offline",
+    "playing": "Aan het spelen",
+    "global": "Globaal",
+    "rank": {
+      "title": "Rang",
+      "global": "Globale rang",
+      "country": "Landrang"
+    },
+    "stats": {
+      "title": "Statistieken",
+      "pp": "PP",
+      "rankedScore": "Ranked score",
+      "totalScore": "Totale score",
+      "maxCombo": "Max combo",
+      "playcount": "Playcount",
+      "playtime": "Speeltijd",
+      "accuracy": "Nauwkeurigheid",
+      "totalHits": "Totaal aantal hits",
+      "replaysWatched": "Bekeken replays",
+      "registered": "Geregistreerd"
+    },
+    "grades": "Grades",
+    "tabs": {
+      "best": "Beste",
+      "recent": "Recent",
+      "mostPlayed": "Meest gespeeld"
+    },
+    "scores": {
+      "noScores": "Geen scores.",
+      "noRecent": "Geen recente scores.",
+      "noMostPlayed": "Geen maps gespeeld.",
+      "loadMore": "Meer laden",
+      "fc": "FC",
+      "miss": "{n} misser",
+      "misses": "{n} missers",
+      "timesPlayed": "{n}x"
+    },
+    "playcountGraph": {
+      "title": "Speelgeschiedenis",
+      "subtitle": "Ingediende scores · aller tijden"
+    },
+    "userpage": {
+      "edit": "Bewerken",
+      "save": "Opslaan",
+      "cancel": "Annuleren",
+      "preview": "Voorbeeld",
+      "write": "Schrijven",
+      "saving": "Opslaan…"
+    },
+    "comments": {
+      "title": "Reacties",
+      "placeholder": "Schrijf een reactie…",
+      "post": "Plaatsen",
+      "delete": "Verwijderen",
+      "noComments": "Nog geen reacties.",
+      "posting": "Plaatsen…"
+    }
+  },
+  "login": {
+    "title": "Inloggen",
+    "noAccount": "Nog geen account?",
+    "register": "Registreren",
+    "username": "Gebruikersnaam",
+    "password": "Wachtwoord",
+    "submit": "Inloggen",
+    "submitting": "Inloggen…",
+    "forgotPassword": "Wachtwoord vergeten",
+    "resetModal": {
+      "title": "Wachtwoord resetten",
+      "description": "Vul je gebruikersnaam of e-mailadres in en we sturen je een link om je wachtwoord te resetten.",
+      "usernameOrEmail": "Gebruikersnaam of e-mailadres",
+      "send": "Resetlink versturen",
+      "sending": "Versturen…",
+      "successTitle": "Controleer je e-mail",
+      "successDesc": "Als er een account met die gebruikersnaam of dat e-mailadres bestaat, hebben we een wachtwoordresetlink naar het gekoppelde adres gestuurd. Deze verloopt over 1 uur.",
+      "close": "Sluiten"
+    }
+  },
+  "register": {
+    "title": "Account aanmaken",
+    "hasAccount": "Heb je al een account?",
+    "signIn": "Inloggen",
+    "username": "Gebruikersnaam",
+    "email": "E-mail",
+    "password": "Wachtwoord",
+    "confirmPassword": "Wachtwoord bevestigen",
+    "submit": "Account aanmaken",
+    "submitting": "Account aanmaken…"
+  },
+  "settings": {
+    "title": "Instellingen",
+    "backToHome": "Terug naar home",
+    "profile": {
+      "title": "Profiel",
+      "newUsername": "Nieuwe gebruikersnaam",
+      "newEmail": "Nieuw e-mailadres",
+      "newPassword": "Nieuw wachtwoord",
+      "confirmPassword": "Nieuw wachtwoord bevestigen",
+      "currentPassword": "Huidig wachtwoord",
+      "keepCurrent": "Laat leeg om huidige waarde te behouden",
+      "confirmPlaceholder": "Bevestig nieuw wachtwoord",
+      "currentRequired": "Vereist om wijzigingen op te slaan",
+      "save": "Wijzigingen opslaan",
+      "saving": "Opslaan..."
+    },
+    "avatar": {
+      "title": "Avatar",
+      "imageFile": "Afbeeldingsbestand",
+      "imageHint": "(PNG, JPG, GIF — max 4 MB)",
+      "currentPassword": "Huidig wachtwoord",
+      "requiredToUpload": "Vereist om te uploaden",
+      "upload": "Avatar uploaden",
+      "uploading": "Uploaden..."
+    },
+    "banner": {
+      "title": "Profielbanner",
+      "imageFile": "Afbeeldingsbestand",
+      "imageHint": "(PNG, JPG, WebP — max 8 MB, aanbevolen 1400×320)",
+      "upload": "Banner uploaden",
+      "uploading": "Uploaden..."
+    }
+  },
+  "clans": {
+    "title": "Clanranglijst",
+    "loading": "Laden…",
+    "noClans": "Geen clans gevonden.",
+    "members": "{n} leden",
+    "prev": "‹ Vorige",
+    "next": "Volgende ›",
+    "pageOf": "Pagina {n} van {total}",
+    "columns": {
+      "rank": "#",
+      "clan": "Clan",
+      "owner": "Eigenaar",
+      "members": "Leden",
+      "totalPp": "Totale PP",
+      "pp": "PP",
+      "accuracy": "Nauwkeurigheid",
+      "playcount": "Playcount",
+      "role": "Rol",
+      "performance": "Prestatie",
+      "plays": "Plays"
+    }
+  },
+  "clanDetail": {
+    "notFound": "Clan niet gevonden.",
+    "loading": "Laden...",
+    "edit": "Bewerken",
+    "tabs": {
+      "info": "Info",
+      "leaderboard": "Ranglijst"
+    },
+    "info": {
+      "owner": "Eigenaar",
+      "members": "Leden",
+      "topPp": "Hoogste PP",
+      "founded": "Opgericht"
+    },
+    "about": {
+      "title": "Over",
+      "edit": "Bewerken",
+      "addDescription": "+ Beschrijving toevoegen",
+      "write": "Schrijven",
+      "preview": "Voorbeeld",
+      "noDescriptionOwner": "Nog geen beschrijving. Klik op \"+ Beschrijving toevoegen\" om er een te schrijven.",
+      "noDescription": "Geen beschrijving opgegeven."
+    },
+    "editPanel": {
+      "title": "Clannaam bewerken",
+      "name": "Naam",
+      "save": "Opslaan",
+      "cancel": "Annuleren"
+    },
+    "invite": {
+      "title": "Speler uitnodigen",
+      "placeholder": "Gebruikersnaam of ID",
+      "button": "Uitnodigen"
+    },
+    "noMembers": "Geen leden gevonden.",
+    "kick": "Kicken",
+    "kickNo": "Nee"
+  },
+  "beatmap": {
+    "loading": "Beatmap laden...",
+    "notFound": "Beatmap niet gevonden.",
+    "mappedBy": "gemapt door {name}",
+    "passes": "{n} clears",
+    "viewOnOsu": "Bekijken op osu.ppy.sh",
+    "difficulties": "Moeilijkheidsgraden",
+    "noScores": "Nog geen scores op deze moeilijkheidsgraad.",
+    "stats": {
+      "length": "Lengte",
+      "bpm": "BPM",
+      "maxCombo": "Max combo",
+      "circleSize": "Circle Size",
+      "hpDrain": "HP Drain",
+      "accuracy": "Nauwkeurigheid",
+      "approachRate": "Approach Rate",
+      "starRating": "Sterrenwaarde"
+    },
+    "board": {
+      "title": "Ranglijst",
+      "loading": "Laden...",
+      "rank": "#",
+      "grade": "Grade",
+      "score": "Score",
+      "accuracy": "Nauwkeurigheid",
+      "player": "Speler",
+      "combo": "Combo",
+      "pp": "PP",
+      "time": "Tijd",
+      "mods": "Mods"
+    }
+  },
+  "contributors": {
+    "title": "Bijdragers",
+    "subtitle": "Mensen die Pawtoka mogelijk hebben gemaakt — van ontwikkeling tot vertaling en meer.",
+    "noContributors": "Nog geen bijdragers vermeld.",
+    "admin": {
+      "open": "+ Bijdrager toevoegen",
+      "close": "✕ Sluiten",
+      "title": "Bijdrager toevoegen",
+      "add": "Bijdrager toevoegen",
+      "adding": "Toevoegen…",
+      "added": "Bijdrager succesvol toegevoegd!",
+      "error": "Er is iets misgegaan.",
+      "confirmDelete": "Verwijderen bevestigen",
+      "cancelDelete": "Annuleren",
+      "fields": {
+        "name": "Weergavenaam",
+        "role": "Rol / Bijdrage",
+        "osuId": "osu!-gebruikers-ID",
+        "github": "GitHub-gebruikersnaam",
+        "bannerUrl": "Aangepaste banner-URL",
+        "avatarUrl": "Aangepaste avatar-URL",
+        "borderStyle": "Kaart-randstijl",
+        "borderColor1": "Kleur 1",
+        "borderColor2": "Kleur 2",
+        "description": "Beschrijving",
+        "descriptionPlaceholder": "Korte notitie over hun bijdrage…"
+      }
+    }
+  },
+  "common": {
+    "loading": "Laden…",
+    "noData": "Geen gegevens beschikbaar.",
+    "prev": "Vorige",
+    "next": "Volgende",
+    "page": "Pagina"
+  },
+  "welcome": {
+    "title": "Welkom, {name}!",
+    "sub": "Je account is klaar. Nog één laatste stap — download de custom client om verbinding te maken met pawinput.",
+    "downloadName": "osu!pawclient.rar",
+    "downloadSize": "~48 MB · Custom osu!-client",
+    "downloadBtn": "Downloaden",
+    "stepsTitle": "Installatie-instructies",
+    "step1": {
+      "title": "Download en pak de client uit",
+      "desc1": "Download de client met de knop hierboven. Het is een",
+      "desc2": "bestand — zorg ervoor dat je",
+      "desc3": "hebt geïnstalleerd om het uit te pakken."
+    },
+    "step2": {
+      "title": "Start osu!.exe",
+      "desc": "Ga naar de uitgepakte map en open {exe}. Je hoeft niets in te stellen om verbinding te maken met onze server — dat is al gedaan."
+    },
+    "step3": {
+      "title": "Log in",
+      "desc": "Gebruik de gebruikersnaam en het wachtwoord waarmee je je account hebt aangemaakt om in te loggen."
+    },
+    "step4": {
+      "title": "Je bent helemaal klaar!",
+      "desc": "Nadat je instellingen goed staan, voeg je je beatmaps toe en kun je spelen."
+    },
+    "note": "De client is een aangepaste versie van de officiële osu!-client. Je skins en beatmaps werken gewoon — met als enige uitzondering Aspire-maps, die bugged kunnen zijn omdat de client gebaseerd is op 2016.",
+    "profileBtn": "Naar mijn profiel →",
+    "homeLink": "Terug naar home"
+  }
+}

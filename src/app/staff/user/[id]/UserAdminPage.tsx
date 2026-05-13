@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useEffect, useTransition } from "react";
 import Link from "next/link";
 import {
   restrictUser, setPriv, wipeScores, silenceUser, editUser,
@@ -8,6 +8,8 @@ import {
   type UserDetail, type HwidLog, type LoginHistory, type AuditLog,
 } from "../../actions";
 import { getRoleBadges } from "@/lib/utils";
+import BadgeChip from "@/components/BadgeChip";
+import type { BadgeDefinition } from "@/types/badge";
 
 /* ─── constants ─────────────────────────────────────────── */
 const PRIV_FLAGS = [
@@ -121,6 +123,48 @@ export default function UserAdminPage({
   const [confirmRemove, setConfirmRemove] = useState(false);
   const [confirmHwid, setConfirmHwid] = useState(false);
   const [newPriv, setNewPriv] = useState(user?.priv ?? 0);
+
+  // Badge state
+  const [allDefs, setAllDefs] = useState<BadgeDefinition[]>([]);
+  const [userBadges, setUserBadges] = useState<BadgeDefinition[]>([]);
+  const [selectedBadge, setSelectedBadge] = useState("");
+  const [badgeMsg, setBadgeMsg] = useState<{ text: string; ok: boolean } | null>(null);
+
+  useEffect(() => {
+    fetch("/api/badges").then((r) => r.json()).then(setAllDefs).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    fetch(`/api/badges/assign?user_id=${userId}`)
+      .then((r) => r.json())
+      .then((d) => setUserBadges(Array.isArray(d) ? d : []))
+      .catch(() => {});
+  }, [userId]);
+
+  async function handleAssignBadge() {
+    if (!selectedBadge) return;
+    const res = await fetch("/api/badges/assign", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ badge_id: selectedBadge, user_id: userId, user_name: user?.name }),
+    });
+    const d = await res.json();
+    setBadgeMsg({ text: res.ok ? "Badge assigned." : (d.error ?? "Error"), ok: res.ok });
+    if (res.ok) {
+      setSelectedBadge("");
+      fetch(`/api/badges/assign?user_id=${userId}`).then((r) => r.json()).then((data) => setUserBadges(Array.isArray(data) ? data : []));
+    }
+    setTimeout(() => setBadgeMsg(null), 3000);
+  }
+
+  async function handleRevokeBadge(badgeId: string) {
+    await fetch("/api/badges/assign", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ badge_id: badgeId, user_id: userId }),
+    });
+    setUserBadges((prev) => prev.filter((b) => b.id !== badgeId));
+  }
 
   function msg(text: string, ok: boolean) {
     setFlash({ text, ok });
@@ -309,6 +353,47 @@ export default function UserAdminPage({
                 </div>
               </div>
             )}
+
+            {/* Badges */}
+            <div className="staff-section">
+              <h2 className="staff-section-title">Badges</h2>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", marginBottom: "0.65rem", minHeight: "22px" }}>
+                {userBadges.length === 0 ? (
+                  <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.25)" }}>No badges assigned</span>
+                ) : (
+                  userBadges.map((b) => (
+                    <span key={b.id} style={{ display: "inline-flex", alignItems: "center", gap: "0.2rem" }}>
+                      <BadgeChip badge={b} />
+                      <button className="badges-revoke-btn" onClick={() => handleRevokeBadge(b.id)} title="Revoke">✕</button>
+                    </span>
+                  ))
+                )}
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
+                <select
+                  className="sp-select"
+                  value={selectedBadge}
+                  onChange={(e) => setSelectedBadge(e.target.value)}
+                  style={{ flex: 1 }}
+                >
+                  <option value="">— select badge —</option>
+                  {allDefs.map((d) => (
+                    <option key={d.id} value={d.id}>{d.label}</option>
+                  ))}
+                </select>
+                {selectedBadge && (() => { const b = allDefs.find((d) => d.id === selectedBadge); return b ? <BadgeChip badge={b} /> : null; })()}
+                <button
+                  className="staff-action-btn staff-action-btn--pink"
+                  onClick={handleAssignBadge}
+                  disabled={!selectedBadge}
+                >Assign</button>
+              </div>
+              {badgeMsg && (
+                <div style={{ fontSize: "0.78rem", marginTop: "0.4rem", color: badgeMsg.ok ? "#6ee7b7" : "#fca5a5" }}>
+                  {badgeMsg.text}
+                </div>
+              )}
+            </div>
 
             {/* Tabbed logs */}
             <div className="staff-section">

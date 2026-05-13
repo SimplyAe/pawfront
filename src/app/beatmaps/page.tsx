@@ -7,35 +7,35 @@ import {
   type BeatmapsetCard,
 } from "@/lib/api";
 import { mapStatus, diffColor, addCommas } from "@/lib/utils";
+import { useT } from "@/i18n";
 
-const STATUS_FILTERS = [
-  { label: "Any",       value: undefined },
-  { label: "Ranked",    value: 2 },
-  { label: "Approved",  value: 3 },
-  { label: "Loved",     value: 5 },
-  { label: "Qualified", value: 4 },
-  { label: "Pending",   value: 0 },
-  { label: "Graveyard", value: -2 },
-];
-
-const MODE_FILTERS = [
-  { label: "Any",    value: undefined },
-  { label: "osu!",   value: 0 },
-  { label: "Taiko",  value: 1 },
-  { label: "Catch",  value: 2 },
-  { label: "Mania",  value: 3 },
-];
-
-const SORT_OPTIONS = [
-  { label: "Plays",      value: "plays" },
-  { label: "Difficulty", value: "diff" },
-  { label: "Title",      value: "title" },
-  { label: "Artist",     value: "artist" },
-];
 
 const PAGE_SIZE = 20;
 
 export default function BeatmapsPage() {
+  const t = useT();
+  const STATUS_FILTERS = [
+    { label: t("beatmaps.status.any"),       value: undefined },
+    { label: t("beatmaps.status.ranked"),    value: 2 },
+    { label: t("beatmaps.status.approved"),  value: 3 },
+    { label: t("beatmaps.status.loved"),     value: 5 },
+    { label: t("beatmaps.status.qualified"), value: 4 },
+    { label: t("beatmaps.status.pending"),   value: 0 },
+    { label: t("beatmaps.status.graveyard"), value: -2 },
+  ];
+  const MODE_FILTERS = [
+    { label: t("beatmaps.mode.any"),  value: undefined },
+    { label: "osu!",  value: 0 },
+    { label: "Taiko", value: 1 },
+    { label: "Catch", value: 2 },
+    { label: "Mania", value: 3 },
+  ];
+  const SORT_OPTIONS = [
+    { label: t("beatmaps.sort.plays"),      value: "plays" },
+    { label: t("beatmaps.sort.difficulty"), value: "diff" },
+    { label: t("beatmaps.sort.title"),      value: "title" },
+    { label: t("beatmaps.sort.artist"),     value: "artist" },
+  ];
   const [query, setQuery] = useState("");
   const [inputVal, setInputVal] = useState("");
   const [statusFilter, setStatusFilter] = useState<number | undefined>(undefined);
@@ -117,7 +117,7 @@ export default function BeatmapsPage() {
             <input
               className="bl-search-input"
               type="text"
-              placeholder="type in keywords..."
+              placeholder={t("beatmaps.searchPlaceholder")}
               value={inputVal}
               onChange={(e) => handleInputChange(e.target.value)}
             />
@@ -131,7 +131,7 @@ export default function BeatmapsPage() {
           {/* Filters */}
           <div className="bl-filters">
             <div className="bl-filter-row">
-              <span className="bl-filter-label">Status</span>
+              <span className="bl-filter-label">{t("beatmaps.status.label")}</span>
               <div className="bl-filter-opts">
                 {STATUS_FILTERS.map((f) => (
                   <button
@@ -145,7 +145,7 @@ export default function BeatmapsPage() {
               </div>
             </div>
             <div className="bl-filter-row">
-              <span className="bl-filter-label">Mode</span>
+              <span className="bl-filter-label">{t("beatmaps.mode.label")}</span>
               <div className="bl-filter-opts">
                 {MODE_FILTERS.map((f) => (
                   <button
@@ -165,7 +165,7 @@ export default function BeatmapsPage() {
       {/* ── Sort bar ── */}
       <div className="bl-sort-bar">
         <div className="container-main bl-sort-inner">
-          <span className="bl-sort-label">Sort by</span>
+          <span className="bl-sort-label">{t("beatmaps.sort.label")}</span>
           <div className="bl-sort-opts">
             {SORT_OPTIONS.map((s) => (
               <button
@@ -178,7 +178,7 @@ export default function BeatmapsPage() {
             ))}
           </div>
           {total > 0 && (
-            <span className="bl-result-count">{addCommas(total)} beatmapsets</span>
+            <span className="bl-result-count">{t("beatmaps.results", { n: addCommas(total) })}</span>
           )}
         </div>
       </div>
@@ -186,9 +186,9 @@ export default function BeatmapsPage() {
       {/* ── Grid ── */}
       <div className="container-main bl-grid-wrap">
         {loading ? (
-          <div className="bl-empty">Loading...</div>
+          <div className="bl-empty">{t("beatmaps.loading")}</div>
         ) : beatmapsets.length === 0 ? (
-          <div className="bl-empty">No beatmaps found.</div>
+          <div className="bl-empty">{t("beatmaps.noResults")}</div>
         ) : (
           <div className="bl-grid">
             {beatmapsets.map((bs) => (
@@ -205,7 +205,7 @@ export default function BeatmapsPage() {
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
             >
-              ‹ Prev
+              {t("beatmaps.prev")}
             </button>
             <span className="bl-page-info">
               {page} / {totalPages}
@@ -215,7 +215,7 @@ export default function BeatmapsPage() {
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
             >
-              Next ›
+              {t("beatmaps.next")}
             </button>
           </div>
         )}
@@ -225,6 +225,7 @@ export default function BeatmapsPage() {
 }
 
 function BeatmapCard({ bs }: { bs: BeatmapsetCard }) {
+  const t = useT();
   const status = mapStatus(bs.status);
   const coverUrl = `https://assets.ppy.sh/beatmaps/${bs.set_id}/covers/card.jpg`;
   const bannerUrl = `https://assets.ppy.sh/beatmaps/${bs.set_id}/covers/cover@2x.jpg`;
@@ -251,7 +252,7 @@ function BeatmapCard({ bs }: { bs: BeatmapsetCard }) {
         <div className="bl-card-title">{bs.title}</div>
         <div className="bl-card-artist">{bs.artist}</div>
         <div className="bl-card-mapper">
-          mapped by <span className="bl-card-mapper-name">{bs.creator}</span>
+          {t("beatmaps.mappedBy").replace("{name}", bs.creator)}
         </div>
 
         {/* Bottom row: status + diffs */}

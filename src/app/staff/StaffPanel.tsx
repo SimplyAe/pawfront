@@ -11,6 +11,7 @@ import { getRoleBadges, timeAgo, intToModeLabel, parseMods } from "@/lib/utils";
 
 const LogsTab   = dynamic(() => import("./LogsTab"),   { ssr: false });
 const ServerTab = dynamic(() => import("./ServerTab"), { ssr: false });
+const BadgesTab = dynamic(() => import("./BadgesTab"), { ssr: false });
 
 const MAP_STATUSES: { label: string; value: number; color: string }[] = [
   { label: "Ranked",    value: 2,  color: "#68d391" },
@@ -241,7 +242,7 @@ function RecentScoresSidebar() {
 
 export default function StaffPanel({ sessionPriv }: { sessionPriv: number }) {
   const isDev = !!(sessionPriv & (1 << 14));
-  const [tab, setTab] = useState<"users" | "maps" | "logs" | "server">("users");
+  const [tab, setTab] = useState<"users" | "maps" | "badges" | "logs" | "server">("users");
   const [query, setQuery] = useState("");
   const [searchResult, setSearchResult] = useState<StaffUser | null>(null);
   const [searchError, setSearchError] = useState("");
@@ -277,7 +278,7 @@ export default function StaffPanel({ sessionPriv }: { sessionPriv: number }) {
           <div className="sp-main">
 
             <div className="sp-tab-bar">
-              {(["users", "maps", "logs", "server"] as const).map((t) => (
+              {(["users", "maps", "badges", "logs", "server"] as const).map((t) => (
                 <button
                   key={t}
                   className={`sp-tab-btn${tab === t ? " sp-tab-btn--active" : ""}`}
@@ -330,6 +331,7 @@ export default function StaffPanel({ sessionPriv }: { sessionPriv: number }) {
             )}
 
             {tab === "maps" && <MapPanel />}
+            {tab === "badges" && <BadgesTab />}
             {tab === "logs" && <LogsTab />}
             {tab === "server" && <ServerTab isDev={isDev} />}
           </div>

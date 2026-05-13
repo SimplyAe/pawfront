@@ -44,5 +44,5 @@ export async function registerAction(
   }
 
   await setSession({ id: data.user!.id, name: data.user!.name, priv: 1, country: "xx" });
-  redirect("/");
+  redirect("/welcome");
 }

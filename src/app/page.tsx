@@ -3,6 +3,7 @@ import { getPlayerCount, getLeaderboard, getServerStats, getRecentScores, type R
 import { addCommas, parseMods, diffColor, timeAgo } from "@/lib/utils";
 import GradeImage from "@/components/GradeImage";
 import Flag from "@/components/Flag";
+import { T } from "@/i18n";
 
 function gradeColor(grade: string): string {
   const g = grade.toUpperCase();
@@ -37,24 +38,24 @@ export default async function HomePage() {
           <div className="hero-card">
             <div className="hero-stats-row">
               <span className="hero-stat-pill total">
-                <strong>{addCommas(counts?.total ?? 0)}</strong> total users
+                <strong>{addCommas(counts?.total ?? 0)}</strong> <T k="home.totalUsers" />
               </span>
               <span className="hero-stat-pill online">
-                <strong>{counts?.online ?? 0}</strong> online
+                <strong>{counts?.online ?? 0}</strong> <T k="home.online" />
               </span>
             </div>
 
             <h1 className="hero-title">Pawtoka</h1>
 
             <ul className="hero-points">
-              <li>A revival of the beloved <strong>osu!atoka</strong> private server.</li>
-              <li>We have a <strong>custom client</strong> made exclusively for this server.</li>
-              <li>Relaxed rules — <strong>some cheats are allowed</strong>.</li>
+              <li><T k="home.tagline1" /></li>
+              <li><T k="home.tagline2" /></li>
+              <li><T k="home.tagline3" /></li>
             </ul>
 
             <div className="hero-actions">
               <Link href="/top-plays" className="hero-btn primary">
-                Top PP Plays
+                <T k="home.topPpPlays" />
               </Link>
             </div>
           </div>
@@ -65,7 +66,7 @@ export default async function HomePage() {
 
       <div className="home-staff">
         <div className="container-main">
-          <div className="home-staff-header">Staff</div>
+          <div className="home-staff-header"><T k="home.staff" /></div>
           <div className="staff-cards">
             <div className="staff-card">
               <div className="staff-avatar-wrap rainbow-border">
@@ -93,7 +94,7 @@ export default async function HomePage() {
             </div>
             <div className="ssc-body">
               <div className="ssc-value">{counts?.online ?? 0} / {addCommas(counts?.total ?? 0)}</div>
-              <div className="ssc-label">Online / Registered</div>
+              <div className="ssc-label"><T k="home.stats.onlineRegistered" /></div>
             </div>
           </div>
 
@@ -103,7 +104,7 @@ export default async function HomePage() {
             </div>
             <div className="ssc-body">
               <div className="ssc-value">{serverStats?.latest_player || "—"}</div>
-              <div className="ssc-label">Latest Player</div>
+              <div className="ssc-label"><T k="home.stats.latestPlayer" /></div>
             </div>
           </div>
 
@@ -113,7 +114,7 @@ export default async function HomePage() {
             </div>
             <div className="ssc-body">
               <div className="ssc-value">{addCommas(serverStats?.submitted_scores ?? 0)}</div>
-              <div className="ssc-label">Submitted Scores</div>
+              <div className="ssc-label"><T k="home.stats.submittedScores" /></div>
             </div>
           </div>
 
@@ -123,7 +124,7 @@ export default async function HomePage() {
             </div>
             <div className="ssc-body">
               <div className="ssc-value" style={{ color: "#ef4444" }}>{addCommas(serverStats?.restricted_count ?? 0)}</div>
-              <div className="ssc-label">Restricted Players</div>
+              <div className="ssc-label"><T k="home.stats.restrictedPlayers" /></div>
             </div>
           </div>
 
@@ -133,7 +134,7 @@ export default async function HomePage() {
             </div>
             <div className="ssc-body">
               <div className="ssc-value">{serverStats?.top_score_pp ? addCommas(Math.round(serverStats.top_score_pp)) + "pp" : "—"}</div>
-              <div className="ssc-label">Top Score{serverStats?.top_score_player ? <><br/><span className="ssc-sub">Done by {serverStats.top_score_player}</span></> : null}</div>
+              <div className="ssc-label"><T k="home.stats.topScore" />{serverStats?.top_score_player ? <><br/><span className="ssc-sub"><T k="home.stats.doneBy" params={{ name: serverStats.top_score_player }} /></span></> : null}</div>
             </div>
           </div>
 
@@ -143,7 +144,7 @@ export default async function HomePage() {
             </div>
             <div className="ssc-body">
               <div className="ssc-value">{addCommas(serverStats?.total_pp ?? 0)}</div>
-              <div className="ssc-label">Total PP</div>
+              <div className="ssc-label"><T k="home.stats.totalPp" /></div>
             </div>
           </div>
 
@@ -157,10 +158,10 @@ export default async function HomePage() {
         {/* Section header */}
         <div style={{ display: "flex", alignItems: "center", marginBottom: "1.5rem" }}>
           <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500 }}>
-            Top Players &mdash; osu! (Vanilla)
+            <T k="home.topPlayers" />
           </span>
           <Link href="/leaderboard" style={{ marginLeft: "auto", color: "#d55b9e", fontSize: "0.8rem" }}>
-            View all
+            <T k="home.viewAll" />
           </Link>
         </div>
 
@@ -215,9 +216,9 @@ export default async function HomePage() {
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
                 <thead>
                   <tr style={{ borderBottom: "1px solid #3a3a4e" }}>
-                    {["#", "Player", "PP", "Accuracy", "Playcount", "Max Combo"].map((h) => (
+                    {[["#","leaderboard.columns.rank"],["Player","leaderboard.columns.player"],["PP","leaderboard.columns.pp"],["Accuracy","leaderboard.columns.accuracy"],["Playcount","leaderboard.columns.playcount"],["Max Combo","leaderboard.columns.maxCombo"]].map(([h, k]) => (
                       <th key={h} style={{ padding: "0.6rem 1rem", textAlign: h === "Player" ? "left" : "right", color: "rgba(255,255,255,0.4)", fontWeight: 500, fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>
-                        {h}
+                        <T k={k} />
                       </th>
                     ))}
                   </tr>
@@ -258,7 +259,7 @@ export default async function HomePage() {
         <div className="container-main" style={{ padding: "2rem 1.25rem 1.5rem" }}>
           <div style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
             <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500 }}>
-              Recent Scores
+              <T k="home.recentScores" />
             </span>
           </div>
           <div className="rscore-grid">

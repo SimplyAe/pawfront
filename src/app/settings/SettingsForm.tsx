@@ -3,10 +3,12 @@
 import { useActionState, useRef } from "react";
 import Link from "next/link";
 import { updateProfileAction, uploadAvatarAction, uploadBannerAction, type SettingsState } from "./actions";
+import { useT } from "@/i18n";
 
 const init: SettingsState = {};
 
 export default function SettingsForm() {
+  const t = useT();
   const [profileState, profileAction, profilePending] = useActionState(updateProfileAction, init);
   const [avatarState, avatarAction, avatarPending] = useActionState(uploadAvatarAction, init);
   const [bannerState, bannerAction, bannerPending] = useActionState(uploadBannerAction, init);
@@ -15,11 +17,11 @@ export default function SettingsForm() {
   return (
     <div className="settings-page">
       <div className="settings-container">
-        <h1 className="settings-title">Settings</h1>
+        <h1 className="settings-title">{t("settings.title")}</h1>
 
         {/* ── Profile section ── */}
         <section className="settings-section">
-          <h2 className="settings-section-title">Profile</h2>
+          <h2 className="settings-section-title">{t("settings.profile.title")}</h2>
 
           {profileState.success && (
             <div className="settings-banner settings-banner--success">{profileState.success}</div>
@@ -30,11 +32,11 @@ export default function SettingsForm() {
 
           <form action={profileAction} className="settings-form">
             <div className="settings-field">
-              <label>New Username</label>
+              <label>{t("settings.profile.newUsername")}</label>
               <input
                 type="text"
                 name="new_username"
-                placeholder="Leave blank to keep current"
+                placeholder={t("settings.profile.keepCurrent")}
                 autoComplete="off"
               />
               {profileState.errors?.username?.map((e, i) => (
@@ -43,11 +45,11 @@ export default function SettingsForm() {
             </div>
 
             <div className="settings-field">
-              <label>New Email</label>
+              <label>{t("settings.profile.newEmail")}</label>
               <input
                 type="email"
                 name="new_email"
-                placeholder="Leave blank to keep current"
+                placeholder={t("settings.profile.keepCurrent")}
                 autoComplete="off"
               />
               {profileState.errors?.email?.map((e, i) => (
@@ -56,11 +58,11 @@ export default function SettingsForm() {
             </div>
 
             <div className="settings-field">
-              <label>New Password</label>
+              <label>{t("settings.profile.newPassword")}</label>
               <input
                 type="password"
                 name="new_password"
-                placeholder="Leave blank to keep current"
+                placeholder={t("settings.profile.keepCurrent")}
                 autoComplete="new-password"
               />
               {profileState.errors?.password?.map((e, i) => (
@@ -69,11 +71,11 @@ export default function SettingsForm() {
             </div>
 
             <div className="settings-field">
-              <label>Confirm New Password</label>
+              <label>{t("settings.profile.confirmPassword")}</label>
               <input
                 type="password"
                 name="confirm_password"
-                placeholder="Confirm new password"
+                placeholder={t("settings.profile.confirmPlaceholder")}
                 autoComplete="new-password"
               />
               {profileState.errors?.confirm_password?.map((e, i) => (
@@ -82,25 +84,25 @@ export default function SettingsForm() {
             </div>
 
             <div className="settings-field settings-field--divider">
-              <label>Current Password <span style={{ color: "#d55b9e" }}>*</span></label>
+              <label>{t("settings.profile.currentPassword")} <span style={{ color: "#d55b9e" }}>*</span></label>
               <input
                 type="password"
                 name="current_password"
-                placeholder="Required to save changes"
+                placeholder={t("settings.profile.currentRequired")}
                 autoComplete="current-password"
                 required
               />
             </div>
 
             <button type="submit" className="settings-btn" disabled={profilePending}>
-              {profilePending ? "Saving..." : "Save Changes"}
+              {profilePending ? t("settings.profile.saving") : t("settings.profile.save")}
             </button>
           </form>
         </section>
 
         {/* ── Avatar section ── */}
         <section className="settings-section">
-          <h2 className="settings-section-title">Avatar</h2>
+          <h2 className="settings-section-title">{t("settings.avatar.title")}</h2>
 
           {avatarState.success && (
             <div className="settings-banner settings-banner--success">{avatarState.success}</div>
@@ -111,7 +113,7 @@ export default function SettingsForm() {
 
           <form action={avatarAction} className="settings-form">
             <div className="settings-field">
-              <label>Image File <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem" }}>(PNG, JPG, GIF — max 4 MB)</span></label>
+              <label>{t("settings.avatar.imageFile")} <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem" }}>{t("settings.avatar.imageHint")}</span></label>
               <input
                 ref={avatarInputRef}
                 type="file"
@@ -122,25 +124,25 @@ export default function SettingsForm() {
             </div>
 
             <div className="settings-field">
-              <label>Current Password <span style={{ color: "#d55b9e" }}>*</span></label>
+              <label>{t("settings.avatar.currentPassword")} <span style={{ color: "#d55b9e" }}>*</span></label>
               <input
                 type="password"
                 name="current_password"
-                placeholder="Required to upload"
+                placeholder={t("settings.avatar.requiredToUpload")}
                 autoComplete="current-password"
                 required
               />
             </div>
 
             <button type="submit" className="settings-btn" disabled={avatarPending}>
-              {avatarPending ? "Uploading..." : "Upload Avatar"}
+              {avatarPending ? t("settings.avatar.uploading") : t("settings.avatar.upload")}
             </button>
           </form>
         </section>
 
         {/* ── Banner section ── */}
         <section className="settings-section">
-          <h2 className="settings-section-title">Profile Banner</h2>
+          <h2 className="settings-section-title">{t("settings.banner.title")}</h2>
 
           {bannerState.success && (
             <div className="settings-banner settings-banner--success">{bannerState.success}</div>
@@ -151,7 +153,7 @@ export default function SettingsForm() {
 
           <form action={bannerAction} className="settings-form">
             <div className="settings-field">
-              <label>Image File <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem" }}>(PNG, JPG, WebP — max 8 MB, recommended 1400×320)</span></label>
+              <label>{t("settings.banner.imageFile")} <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem" }}>{t("settings.banner.imageHint")}</span></label>
               <input
                 type="file"
                 name="banner"
@@ -161,14 +163,14 @@ export default function SettingsForm() {
             </div>
 
             <button type="submit" className="settings-btn" disabled={bannerPending}>
-              {bannerPending ? "Uploading..." : "Upload Banner"}
+              {bannerPending ? t("settings.banner.uploading") : t("settings.banner.upload")}
             </button>
           </form>
         </section>
 
         <div style={{ marginTop: "1.5rem" }}>
           <Link href="/" style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.85rem" }}>
-            Back to home
+            {t("settings.backToHome")}
           </Link>
         </div>
       </div>

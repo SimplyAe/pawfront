@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { T } from "@/i18n";
 
 export default function Footer() {
   return (
@@ -12,12 +13,12 @@ export default function Footer() {
     >
       <div style={{ maxWidth: "1160px", margin: "0 auto" }}>
         <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem" }}>
-          pawinput &mdash; an osu! private server &mdash;{" "}
+          pawinput &mdash; <T k="footer.tagline" /> &mdash;{" "}
           <Link
             href="/leaderboard"
             style={{ color: "rgba(255,255,255,0.5)", textDecoration: "underline" }}
           >
-            leaderboard
+            <T k="footer.leaderboard" />
           </Link>
         </p>
       </div>

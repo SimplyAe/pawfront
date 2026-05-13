@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getSession } from "@/lib/session";
+import { LanguageProvider } from "@/i18n";
 
 export const metadata: Metadata = {
   title: "pawinput",
@@ -18,11 +19,13 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header user={user} />
-        <main style={{ paddingTop: "55px", minHeight: "calc(100vh - 55px)" }}>
-          {children}
-        </main>
-        <Footer />
+        <LanguageProvider>
+          <Header user={user} />
+          <main style={{ paddingTop: "55px", minHeight: "calc(100vh - 55px)" }}>
+            {children}
+          </main>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

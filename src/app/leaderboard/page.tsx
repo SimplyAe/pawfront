@@ -6,17 +6,19 @@ import { getLeaderboard, LeaderboardEntry } from "@/lib/api";
 import { addCommas, modeToInt } from "@/lib/utils";
 import ModeSelector from "@/components/ModeSelector";
 import Flag from "@/components/Flag";
+import { useT } from "@/i18n";
 
-const SORT_OPTIONS = [
-  { key: "pp", label: "Performance" },
-  { key: "rscore", label: "Ranked Score" },
-  { key: "tscore", label: "Total Score" },
-  { key: "acc", label: "Accuracy" },
-  { key: "plays", label: "Play Count" },
-  { key: "playtime", label: "Playtime" },
-];
 
 export default function LeaderboardPage() {
+  const t = useT();
+  const SORT_OPTIONS = [
+    { key: "pp", label: t("leaderboard.sort.performance") },
+    { key: "rscore", label: t("leaderboard.sort.rankedScore") },
+    { key: "tscore", label: t("leaderboard.sort.totalScore") },
+    { key: "acc", label: t("leaderboard.sort.accuracy") },
+    { key: "plays", label: t("leaderboard.sort.playCount") },
+    { key: "playtime", label: t("leaderboard.sort.playtime") },
+  ];
   const [mode, setMode] = useState("std");
   const [mods, setMods] = useState("vn");
   const [sort, setSort] = useState("pp");
@@ -53,7 +55,7 @@ export default function LeaderboardPage() {
           color: "#fff",
         }}
       >
-        Leaderboard
+        {t("leaderboard.title")}
       </h1>
 
       <div
@@ -105,7 +107,7 @@ export default function LeaderboardPage() {
           <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <input
               type="text"
-              placeholder="Country (e.g. US)"
+              placeholder={t("leaderboard.countryPlaceholder")}
               maxLength={2}
               value={country}
               onChange={(e) => {
@@ -135,7 +137,7 @@ export default function LeaderboardPage() {
               fontSize: "0.9rem",
             }}
           >
-            Loading...
+            {t("leaderboard.loading")}
           </div>
         ) : (
           <>
@@ -143,13 +145,13 @@ export default function LeaderboardPage() {
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}>
                 <thead>
                   <tr style={{ borderBottom: "1px solid #3a3a4e" }}>
-                    <th style={thStyle}>#</th>
-                    <th style={{ ...thStyle, textAlign: "left" }}>Player</th>
-                    {sort === "pp" && <th style={thStyle}>PP</th>}
-                    {(sort === "rscore" || sort === "tscore") && <th style={thStyle}>Score</th>}
-                    <th style={thStyle}>Accuracy</th>
-                    <th style={thStyle}>Playcount</th>
-                    <th style={thStyle}>Max Combo</th>
+                    <th style={thStyle}>{t("leaderboard.columns.rank")}</th>
+                    <th style={{ ...thStyle, textAlign: "left" }}>{t("leaderboard.columns.player")}</th>
+                    {sort === "pp" && <th style={thStyle}>{t("leaderboard.columns.pp")}</th>}
+                    {(sort === "rscore" || sort === "tscore") && <th style={thStyle}>{t("leaderboard.columns.score")}</th>}
+                    <th style={thStyle}>{t("leaderboard.columns.accuracy")}</th>
+                    <th style={thStyle}>{t("leaderboard.columns.playcount")}</th>
+                    <th style={thStyle}>{t("leaderboard.columns.maxCombo")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -276,7 +278,7 @@ export default function LeaderboardPage() {
                           color: "rgba(255,255,255,0.3)",
                         }}
                       >
-                        No players to display.
+                        {t("leaderboard.noPlayers")}
                       </td>
                     </tr>
                   )}
@@ -307,10 +309,10 @@ export default function LeaderboardPage() {
                   fontSize: "0.85rem",
                 }}
               >
-                Prev
+                {t("leaderboard.prev")}
               </button>
               <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.85rem" }}>
-                Page {page + 1}
+                {t("leaderboard.page", { n: page + 1 })}
               </span>
               <button
                 onClick={() => setPage((p) => p + 1)}
@@ -326,7 +328,7 @@ export default function LeaderboardPage() {
                   fontSize: "0.85rem",
                 }}
               >
-                Next
+                {t("leaderboard.next")}
               </button>
             </div>
           </>

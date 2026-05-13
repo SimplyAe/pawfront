@@ -1,0 +1,398 @@
+{
+  "nav": {
+    "home": "Início",
+    "leaderboard": "Colocação",
+    "beatmaps": "Beatmaps",
+    "clans": "Guildas",
+    "topPlays": "Melhores Jogadas por PP",
+    "staff": "Staff",
+    "signIn": "Entrar",
+    "signOut": "Sair",
+    "register": "Registrar",
+    "searchPlaceholder": "Procurar jogadores...",
+    "closeSearch": "Fechar pesquisa",
+    "openSearch": "Procurar jogadores",
+    "contributors": "Contribuidores",
+    "more": "Mais"
+  },
+  "footer": {
+    "tagline": "um servidor privado de osu!",
+    "leaderboard": "colocação"
+  },
+  "home": {
+    "totalUsers": "usuários totais",
+    "online": "online",
+    "tagline1": "Um renascimento do amado servidor privado osu!atoka",
+    "tagline2": "Nós temos um client customizado feito exclusivamente para este servidor.",
+    "tagline3": "Regras relaxadas — algumas trapaças são permitidas.",
+    "topPpPlays": "Melhores Jogadas por PP",
+    "staff": "Staff",
+    "topPlayers": "Melhores Jogadores",
+    "viewAll": "Ver tudo",
+    "recentScores": "Pontuações recentes",
+    "stats": {
+      "onlineRegistered": "Online / Registrado ",
+      "latestPlayer": "Ultimo Jogador",
+      "submittedScores": "Pontuações Enviadas",
+      "restrictedPlayers": "Jogadores Restritos",
+      "topScore": "Melhor Pontuação",
+      "doneBy": "feito por {name}",
+      "totalPp": "PP Total"
+    }
+  },
+  "leaderboard": {
+    "title": "Colocação",
+    "countryPlaceholder": "País (exemplo: US]",
+    "loading": "Carregando...",
+    "noPlayers": "Nenhum jogador encontrado.",
+    "prev": "Anterior",
+    "next": "Proximo",
+    "page": "Pagina {n}",
+    "sort": {
+      "performance": "Performance",
+      "rankedScore": "Pontuação Ranqueada",
+      "totalScore": "Pontuação Total",
+      "accuracy": "Precisão",
+      "playCount": "Vezes Jogadas",
+      "playtime": "Tempo de Jogo"
+    },
+    "columns": {
+      "rank": "#",
+      "player": "Jogador",
+      "pp": "PP",
+      "score": "Pontuação",
+      "accuracy": "Precisão",
+      "playcount": "Vezes Jogadas",
+      "maxCombo": "Combo Máximo"
+    }
+  },
+  "topPlays": {
+    "title": "Melhores Jogadas por PP",
+    "subtitle": "Melhores pontuaçoes no servidor · ordenado por pp ",
+    "loading": "Carregando...",
+    "noScores": "Nenhuma pontuação encontrada para este modo.",
+    "prev": "← Anterior",
+    "next": "Proximo →",
+    "fc": "FC",
+    "miss": "{n} erro",
+    "misses": "{n} erros"
+  },
+  "beatmaps": {
+    "searchPlaceholder": "digite palavras...",
+    "loading": "Carregando...",
+    "noResults": "Nenhum beatmap encontrado.",
+    "results": "{n} beatmapsets",
+    "mappedBy": "mapeado por {name}",
+    "prev": "‹ Anterior",
+    "next": "Proximo ›",
+    "status": {
+      "label": "Status",
+      "any": "Qualquer",
+      "ranked": "Ranqueado",
+      "approved": "Aprovado",
+      "loved": "Loved",
+      "qualified": "Qualificado",
+      "pending": "Pendente",
+      "graveyard": "Cemitério"
+    },
+    "mode": {
+      "label": "Modo",
+      "any": "Qualquer"
+    },
+    "sort": {
+      "label": "Classificar por",
+      "plays": "Jogadas",
+      "difficulty": "Dificuldade",
+      "title": "Titulo",
+      "artist": "Artista"
+    }
+  },
+  "profile": {
+    "online": "Online",
+    "offline": "Offline",
+    "playing": "Jogando",
+    "global": "Global",
+    "rank": {
+      "title": "Colocação",
+      "global": "Colocação global",
+      "country": "Colocação do País"
+    },
+    "stats": {
+      "title": "Estatísticas",
+      "pp": "PP",
+      "rankedScore": "Pontuação ranqueada",
+      "totalScore": "Pontuação total",
+      "maxCombo": "Combo máximo",
+      "playcount": "Vezes jogadas",
+      "playtime": "Tempo de Jogo",
+      "accuracy": "Precisão",
+      "totalHits": "Acertos totais",
+      "replaysWatched": "Replays assistidos",
+      "registered": "Registrado"
+    },
+    "grades": "Notas",
+    "tabs": {
+      "best": "Melhor",
+      "recent": "Recente",
+      "mostPlayed": "Mais Jogado"
+    },
+    "scores": {
+      "noScores": "Nenhuma pontuação.",
+      "noRecent": "Nenhuma pontuação recente.",
+      "noMostPlayed": "Nenhum mapa jogado.",
+      "loadMore": "Carregar mais",
+      "fc": "FC",
+      "miss": "{n] erro",
+      "misses": "{n} erros",
+      "timesPlayed": "{n}x"
+    },
+    "playcountGraph": {
+      "title": "Histórico de Jogadas",
+      "subtitle": "Pontuações enviadas · o tempo todo "
+    },
+    "userpage": {
+      "edit": "Editar",
+      "save": "Salvar",
+      "cancel": "Cancelar",
+      "preview": "Visualizar",
+      "write": "Escrever",
+      "saving": "Salvando..."
+    },
+    "comments": {
+      "title": "Comments",
+      "placeholder": "Escreva um comentário...",
+      "post": "Postar",
+      "delete": "Deletar",
+      "noComments": "Nenhum comentário por enquanto.",
+      "posting": "Postando..."
+    }
+  },
+  "login": {
+    "title": "Entrar",
+    "noAccount": "Não tem uma conta?",
+    "register": "Registrar",
+    "username": "Nome",
+    "password": "Senha",
+    "submit": "Entrar",
+    "submitting": "Entrando...",
+    "forgotPassword": "Esqueci minha senha",
+    "resetModal": {
+      "title": "Resetar senha",
+      "description": "Coloque seu nome ou email e vamos te enviar um link para trocar sua senha.",
+      "usernameOrEmail": "Nome ou email",
+      "send": "Enviar link para troca de senha",
+      "sending": "Enviando...",
+      "successTitle": "Verifique seu email",
+      "successDesc": "Se uma conta com esse nome ou email existe, nós enviamos um link para trocar a senha para o email associado, Ele expira em 1 hora.",
+      "close": "Fechar"
+    }
+  },
+  "register": {
+    "title": "Criar conta",
+    "hasAccount": "Já tem uma conta?",
+    "signIn": "Entrar",
+    "username": "Nome",
+    "email": "Email",
+    "password": "Senha",
+    "confirmPassword": "Confirmar senha",
+    "submit": "Criar conta",
+    "submitting": "Criando conta..."
+  },
+  "settings": {
+    "title": "Configurações",
+    "backToHome": "De volta para o início",
+    "profile": {
+      "title": "Perfil",
+      "newUsername": "Novo nome",
+      "newEmail": "Novo email",
+      "newPassword": "Nova senha",
+      "confirmPassword": "Confirmar nova Senha",
+      "currentPassword": "Senha atual",
+      "keepCurrent": "Deixe em branco para não alterar",
+      "confirmPlaceholder": "Confirmar nova senha",
+      "currentRequired": "Necessário para salvar as alterações",
+      "save": "Salvar alterações",
+      "saving": "Salvando..."
+    },
+    "avatar": {
+      "title": "Avatar",
+      "imageFile": "Arquivo de Imagem",
+      "imageHint": "(PNG, JPG, GIF — máximo de 4 MB)",
+      "currentPassword": "Senha atual",
+      "requiredToUpload": "Necessário para trocar",
+      "upload": "Alterar avatar",
+      "uploading": "Enviando..."
+    },
+    "banner": {
+      "title": "Fundo do perfil",
+      "imageFile": "Arquivo de Imagem",
+      "imageHint": "(PNG, JPG, WebP — max 8 MB, é recomendado usar a resolução 1440x320)",
+      "upload": "Alterar fundo de perfil",
+      "uploading": "Enviando..."
+    }
+  },
+  "clans": {
+    "title": "Colocação de Guildas",
+    "loading": "Carregando...",
+    "noClans": "Nenhuma guilda encontrada.",
+    "members": "{n} membros",
+    "columns": {
+      "rank": "#",
+      "clan": "Guilda",
+      "pp": "PP",
+      "accuracy": "Precisão",
+      "playcount": "Vezes Jogadas",
+      "owner": "Dono",
+      "members": "Membros",
+      "totalPp": "PP Total",
+      "role": "Cargo",
+      "performance": "Pontuação",
+      "plays": "Jogadas"
+    },
+    "prev": "‹ Anterior",
+    "next": "Proximo ›",
+    "pageOf": "Pagina {n} de {total}"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "noData": "Nenhuma informação encontrada.",
+    "prev": "‹ Anterior",
+    "next": "Proximo ›",
+    "page": "Pagina {n} de {total}"
+  },
+  "clanDetail": {
+    "notFound": "Guilda não encontrada.",
+    "loading": "Carregando...",
+    "edit": "Editar",
+    "tabs": {
+      "info": "Informação",
+      "leaderboard": "Colocação"
+    },
+    "info": {
+      "owner": "Dono",
+      "members": "Membros",
+      "topPp": "Melhor jogada por PP",
+      "founded": "Criado"
+    },
+    "about": {
+      "title": "Sobre",
+      "edit": "Editar",
+      "addDescription": "+ Adicionar descrição",
+      "write": "Escrever",
+      "preview": "Visualizar",
+      "noDescriptionOwner": "Sem descrição. Clique \"+ Adicionar descrição\" para escrever.",
+      "noDescription": "Nenhuma descrição foi fornecida"
+    },
+    "editPanel": {
+      "title": "Mudar nome da Guilda",
+      "name": "Nome",
+      "save": "Salvar",
+      "cancel": "Cancelar"
+    },
+    "invite": {
+      "title": "Convidar Jogador",
+      "placeholder": "Nome de usuário ou ID",
+      "button": "Convidar"
+    },
+    "noMembers": "Nenhum membro encontrado.",
+    "kick": "Expulsar",
+    "kickNo": "Não"
+  },
+  "beatmap": {
+    "loading": "Carregando...",
+    "notFound": "Beatmap não encontrado.",
+    "mappedBy": "Mapeado por {nome}",
+    "passes": "{n} passos",
+    "viewOnOsu": "Olhar em osu.ppy.sh",
+    "difficulties": "Dificuldades",
+    "noScores": "Nenhuma pontuação nessa dificuldade por enquanto.",
+    "stats": {
+      "length": "Duração",
+      "bpm": "BPM",
+      "maxCombo": "Combo máximo",
+      "circleSize": "Tamanho dos Círculos",
+      "hpDrain": "Dreno de HP",
+      "accuracy": "Precisão",
+      "approachRate": "Velocidade de Aproximação",
+      "starRating": "Dificuldade"
+    },
+    "board": {
+      "title": "Colocação",
+      "loading": "Carregando...",
+      "rank": "#",
+      "grade": "Nota",
+      "score": "Pontuação",
+      "accuracy": "Precisão",
+      "player": "Jogador",
+      "combo": "Combo",
+      "pp": "PP",
+      "time": "Tempo",
+      "mods": "Modificações"
+    }
+  },
+  "contributors": {
+    "title": "Contribuidores",
+    "subtitle": "Pessoas que ajudaram o Pawtoka — de desenvolvimento para tradução e mais.  ",
+    "noContributors": "Sem contribuidores por enquanto",
+    "admin": {
+      "open": "+ Add Contributor",
+      "close": "✕ Fechar",
+      "title": "Adicionar um Contribuidor",
+      "add": "Adicionar um Contribuidor",
+      "adding": "Adicionando...",
+      "added": "Contribuidor adicionado com sucesso",
+      "error": "Algo deu errado",
+      "confirmDelete": "Confirmar remoção",
+      "cancelDelete": "Cancelar",
+      "fields": {
+        "name": "Nome de Exibição",
+        "role": "Cargo / Contribuição",
+        "osuId": "ID do usuário",
+        "github": "Usúario do GitHub",
+        "avatarUrl": "URL de Avatar Customizado",
+        "description": "URL de Fundo Customizado",
+        "descriptionPlaceholder": "Pequena nota sobre a contribuição do usuário",
+        "bannerUrl": "URl do Fundo",
+        "borderStyle": "Estilo do Fundo",
+        "borderColor1": "Cor 1",
+        "borderColor2": "Cor 2"
+      }
+    }
+  },
+  "common": {
+    "loading": "Carregando…",
+    "noData": "Nenhuma informação disponivel.",
+    "prev": "Anterior",
+    "next": "Proximo",
+    "page": "Pagina"
+  },
+  "welcome": {
+    "title": "Bem vindo, {name}!",
+    "sub": "Sua conta está pronta. Um ultimo passo — Instale o client customizado para conectar ao pawinput.",
+    "downloadName": "osu!pawclient.rar",
+    "downloadSize": "~48 MB · Client de osu! customizado",
+    "downloadBtn": "Baixar",
+    "stepsTitle": "Como instalar",
+    "step1": {
+      "title": "Baixe e extraia o client",
+      "desc1": "Baixe o client com o botão acima. É um",
+      "desc2": "arquivo — tenha certeza de que você",
+      "desc3": "baixou e extraia ele"
+    },
+    "step2": {
+      "title": "Rode o osu!.exe", 
+      "desc": "Vá até a pasta extraída e abra o {exe}. Você não precisa configurar nada para conectar ao nosso servidor — isso já está pronto."
+    },
+    "step3": {
+      "title": "Faça login",
+      "desc": "Use o nome de usuário e a senha que você criou na sua conta para entrar."
+    },
+    "step4": {
+      "title": "Tudo pronto!",
+      "desc": "Depois de configurar suas opções corretamente, adicione seus beatmaps e divirta-se."
+    },
+    "note": "O cliente é uma versão modificada do cliente oficial do osu!. Suas skins e beatmaps funcionarão normalmente — com a única exceção dos mapas Aspire, que podem apresentar bugs porque o cliente é baseado em 2016.",
+    "profileBtn": "Ir para meu perfil →",
+    "homeLink": "Ir para o início"
+  }
+}

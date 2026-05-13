@@ -1,0 +1,392 @@
+{
+  "nav": {
+    "home": "",
+    "leaderboard": "",
+    "beatmaps": "",
+    "clans": "",
+    "topPlays": "",
+    "staff": "",
+    "signIn": "",
+    "signOut": "",
+    "register": "",
+    "searchPlaceholder": "",
+    "closeSearch": "",
+    "openSearch": "",
+    "contributors": "",
+    "more": "",
+    "client": "Klient"
+  },
+  "footer": {
+    "tagline": "",
+    "leaderboard": ""
+  },
+  "home": {
+    "totalUsers": "",
+    "online": "",
+    "tagline1": "",
+    "tagline2": "",
+    "tagline3": "",
+    "topPpPlays": "",
+    "staff": "",
+    "topPlayers": "",
+    "viewAll": "",
+    "recentScores": "",
+    "stats": {
+      "onlineRegistered": "",
+      "latestPlayer": "",
+      "submittedScores": "",
+      "restrictedPlayers": "",
+      "topScore": "",
+      "doneBy": "",
+      "totalPp": ""
+    }
+  },
+  "leaderboard": {
+    "title": "",
+    "countryPlaceholder": "",
+    "loading": "",
+    "noPlayers": "",
+    "prev": "",
+    "next": "",
+    "page": "",
+    "sort": {
+      "performance": "",
+      "rankedScore": "",
+      "totalScore": "",
+      "accuracy": "",
+      "playCount": "",
+      "playtime": ""
+    },
+    "columns": {
+      "rank": "",
+      "player": "",
+      "pp": "",
+      "score": "",
+      "accuracy": "",
+      "playcount": "",
+      "maxCombo": ""
+    }
+  },
+  "topPlays": {
+    "title": "",
+    "subtitle": "",
+    "loading": "",
+    "noScores": "",
+    "prev": "",
+    "next": "",
+    "fc": "",
+    "miss": "",
+    "misses": ""
+  },
+  "beatmaps": {
+    "searchPlaceholder": "",
+    "loading": "",
+    "noResults": "",
+    "results": "",
+    "mappedBy": "",
+    "prev": "",
+    "next": "",
+    "status": {
+      "label": "",
+      "any": "",
+      "ranked": "",
+      "approved": "",
+      "loved": "",
+      "qualified": "",
+      "pending": "",
+      "graveyard": ""
+    },
+    "mode": {
+      "label": "",
+      "any": ""
+    },
+    "sort": {
+      "label": "",
+      "plays": "",
+      "difficulty": "",
+      "title": "",
+      "artist": ""
+    }
+  },
+  "profile": {
+    "online": "",
+    "offline": "",
+    "playing": "",
+    "global": "",
+    "rank": {
+      "title": "",
+      "global": "",
+      "country": ""
+    },
+    "stats": {
+      "title": "",
+      "pp": "",
+      "rankedScore": "",
+      "totalScore": "",
+      "maxCombo": "",
+      "playcount": "",
+      "playtime": "",
+      "accuracy": "",
+      "totalHits": "",
+      "replaysWatched": "",
+      "registered": ""
+    },
+    "grades": "",
+    "tabs": {
+      "best": "",
+      "recent": "",
+      "mostPlayed": ""
+    },
+    "scores": {
+      "noScores": "",
+      "noRecent": "",
+      "noMostPlayed": "",
+      "loadMore": "",
+      "fc": "",
+      "miss": "",
+      "misses": "",
+      "timesPlayed": ""
+    },
+    "playcountGraph": {
+      "title": "",
+      "subtitle": ""
+    },
+    "userpage": {
+      "edit": "",
+      "save": "",
+      "cancel": "",
+      "preview": "",
+      "write": "",
+      "saving": ""
+    },
+    "comments": {
+      "title": "",
+      "placeholder": "",
+      "post": "",
+      "delete": "",
+      "noComments": "",
+      "posting": ""
+    }
+  },
+  "login": {
+    "title": "",
+    "noAccount": "",
+    "register": "",
+    "username": "",
+    "password": "",
+    "submit": "",
+    "submitting": "",
+    "forgotPassword": "",
+    "resetModal": {
+      "title": "",
+      "description": "",
+      "usernameOrEmail": "",
+      "send": "",
+      "sending": "",
+      "successTitle": "",
+      "successDesc": "",
+      "close": ""
+    }
+  },
+  "register": {
+    "title": "",
+    "hasAccount": "",
+    "signIn": "",
+    "username": "",
+    "email": "",
+    "password": "",
+    "confirmPassword": "",
+    "submit": "",
+    "submitting": ""
+  },
+  "settings": {
+    "title": "",
+    "backToHome": "",
+    "profile": {
+      "title": "",
+      "newUsername": "",
+      "newEmail": "",
+      "newPassword": "",
+      "confirmPassword": "",
+      "currentPassword": "",
+      "keepCurrent": "",
+      "confirmPlaceholder": "",
+      "currentRequired": "",
+      "save": "",
+      "saving": ""
+    },
+    "avatar": {
+      "title": "",
+      "imageFile": "",
+      "imageHint": "",
+      "currentPassword": "",
+      "requiredToUpload": "",
+      "upload": "",
+      "uploading": ""
+    },
+    "banner": {
+      "title": "",
+      "imageFile": "",
+      "imageHint": "",
+      "upload": "",
+      "uploading": ""
+    }
+  },
+  "clans": {
+    "title": "",
+    "loading": "",
+    "noClans": "",
+    "members": "",
+    "columns": {
+      "rank": "",
+      "clan": "",
+      "pp": "",
+      "accuracy": "",
+      "playcount": "",
+      "owner": "",
+      "members": "",
+      "totalPp": "",
+      "role": "",
+      "performance": "",
+      "plays": ""
+    },
+    "prev": "",
+    "next": "",
+    "pageOf": ""
+  },
+  "common": {
+    "loading": "",
+    "noData": "",
+    "prev": "",
+    "next": "",
+    "page": ""
+  },
+  "clanDetail": {
+    "notFound": "",
+    "loading": "",
+    "edit": "",
+    "tabs": {
+      "info": "",
+      "leaderboard": ""
+    },
+    "info": {
+      "owner": "",
+      "members": "",
+      "topPp": "",
+      "founded": ""
+    },
+    "about": {
+      "title": "",
+      "edit": "",
+      "addDescription": "",
+      "write": "",
+      "preview": "",
+      "noDescriptionOwner": "",
+      "noDescription": ""
+    },
+    "editPanel": {
+      "title": "",
+      "name": "",
+      "save": "",
+      "cancel": ""
+    },
+    "invite": {
+      "title": "",
+      "placeholder": "",
+      "button": ""
+    },
+    "noMembers": "",
+    "kick": "",
+    "kickNo": ""
+  },
+  "beatmap": {
+    "loading": "",
+    "notFound": "",
+    "mappedBy": "",
+    "passes": "",
+    "viewOnOsu": "",
+    "difficulties": "",
+    "noScores": "",
+    "stats": {
+      "length": "",
+      "bpm": "",
+      "maxCombo": "",
+      "circleSize": "",
+      "hpDrain": "",
+      "accuracy": "",
+      "approachRate": "",
+      "starRating": ""
+    },
+    "board": {
+      "title": "",
+      "loading": "",
+      "rank": "",
+      "grade": "",
+      "score": "",
+      "accuracy": "",
+      "player": "",
+      "combo": "",
+      "pp": "",
+      "time": "",
+      "mods": ""
+    }
+  },
+  "contributors": {
+    "title": "",
+    "subtitle": "",
+    "noContributors": "",
+    "admin": {
+      "open": "",
+      "close": "",
+      "title": "",
+      "add": "",
+      "adding": "",
+      "added": "",
+      "error": "",
+      "confirmDelete": "",
+      "cancelDelete": "",
+      "fields": {
+        "name": "",
+        "role": "",
+        "osuId": "",
+        "github": "",
+        "avatarUrl": "",
+        "description": "",
+        "descriptionPlaceholder": "",
+        "bannerUrl": "",
+        "borderStyle": "",
+        "borderColor1": "",
+        "borderColor2": ""
+      }
+    }
+  },
+  "welcome": {
+    "title": "",
+    "sub": "",
+    "downloadName": "",
+    "downloadSize": "",
+    "downloadBtn": "",
+    "stepsTitle": "",
+    "step1": {
+      "title": "",
+      "desc1": "",
+      "desc2": "",
+      "desc3": ""
+    },
+    "step2": {
+      "title": "",
+      "desc": ""
+    },
+    "step3": {
+      "title": "",
+      "desc": ""
+    },
+    "step4": {
+      "title": "",
+      "desc": ""
+    },
+    "note": "",
+    "profileBtn": "",
+    "homeLink": ""
+  }
+}

@@ -7,6 +7,8 @@ import {
   type StaffUser, type UserDetail, type HwidLog, type LoginHistory, type AuditLog,
 } from "./actions";
 import { getRoleBadges } from "@/lib/utils";
+import BadgeChip from "@/components/BadgeChip";
+import type { BadgeDefinition } from "@/types/badge";
 
 const PRIV_FLAGS = [
   { label: "Unrestricted",     bit: 1 << 0  },
@@ -109,6 +111,12 @@ export default function UserDetailDrawer({
   const [privOpen, setPrivOpen] = useState(false);
   const [newPriv, setNewPriv] = useState(user.priv);
 
+  // Badge state
+  const [allDefs, setAllDefs] = useState<BadgeDefinition[]>([]);
+  const [userBadges, setUserBadges] = useState<BadgeDefinition[]>([]);
+  const [selectedBadge, setSelectedBadge] = useState("");
+  const [badgeMsg, setBadgeMsg] = useState<{ text: string; ok: boolean } | null>(null);
+
   function flash(text: string, ok: boolean) {
     setMsg({ text, ok });
     setTimeout(() => setMsg(null), 4000);
@@ -130,6 +138,44 @@ export default function UserDetailDrawer({
   }
 
   useEffect(() => { reload(); }, [user.id]);
+
+  useEffect(() => {
+    fetch("/api/badges").then((r) => r.json()).then(setAllDefs).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    fetch(`/api/badges/assign?user_id=${user.id}`)
+      .then((r) => r.json())
+      .then((d) => setUserBadges(Array.isArray(d) ? d : []))
+      .catch(() => {});
+  }, [user.id]);
+
+  async function handleAssignBadge() {
+    if (!selectedBadge) return;
+    const res = await fetch("/api/badges/assign", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ badge_id: selectedBadge, user_id: user.id, user_name: user.name }),
+    });
+    const d = await res.json();
+    if (res.ok) {
+      setBadgeMsg({ text: "Badge assigned.", ok: true });
+      setSelectedBadge("");
+      fetch(`/api/badges/assign?user_id=${user.id}`).then((r) => r.json()).then((data) => setUserBadges(Array.isArray(data) ? data : []));
+    } else {
+      setBadgeMsg({ text: d.error ?? "Error", ok: false });
+    }
+    setTimeout(() => setBadgeMsg(null), 3000);
+  }
+
+  async function handleRevokeBadge(badgeId: string) {
+    await fetch("/api/badges/assign", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ badge_id: badgeId, user_id: user.id }),
+    });
+    setUserBadges((prev) => prev.filter((b) => b.id !== badgeId));
+  }
 
   // Close on Escape
   useEffect(() => {
@@ -457,8 +503,53 @@ export default function UserDetailDrawer({
                 <InfoRow label="Restricted"   value={detail.restricted ? "Yes" : "No"} valueColor={detail.restricted ? "#fca5a5" : "#6ee7b7"} />
               </div>
 
+              {/* Badges */}
+              <div style={{ marginTop: "1.25rem", paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+                <div className="sp-expand-title" style={{ marginBottom: "0.6rem" }}>Badges</div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", marginBottom: "0.65rem", minHeight: "22px" }}>
+                  {userBadges.length === 0 ? (
+                    <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.2)" }}>No badges assigned</span>
+                  ) : (
+                    userBadges.map((b) => (
+                      <span key={b.id} style={{ display: "inline-flex", alignItems: "center", gap: "0.2rem" }}>
+                        <BadgeChip badge={b} />
+                        <button
+                          className="badges-revoke-btn"
+                          onClick={() => handleRevokeBadge(b.id)}
+                          title="Revoke"
+                        >✕</button>
+                      </span>
+                    ))
+                  )}
+                </div>
+                <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
+                  <select
+                    className="sp-select"
+                    value={selectedBadge}
+                    onChange={(e) => setSelectedBadge(e.target.value)}
+                    style={{ flex: 1, minWidth: "150px" }}
+                  >
+                    <option value="">— select badge —</option>
+                    {allDefs.map((d) => (
+                      <option key={d.id} value={d.id}>{d.label}</option>
+                    ))}
+                  </select>
+                  {selectedBadge && (() => { const b = allDefs.find((d) => d.id === selectedBadge); return b ? <BadgeChip badge={b} /> : null; })()}
+                  <button
+                    className="staff-action-btn staff-action-btn--pink"
+                    onClick={handleAssignBadge}
+                    disabled={!selectedBadge}
+                  >Assign</button>
+                </div>
+                {badgeMsg && (
+                  <div style={{ fontSize: "0.78rem", marginTop: "0.4rem", color: badgeMsg.ok ? "#6ee7b7" : "#fca5a5" }}>
+                    {badgeMsg.text}
+                  </div>
+                )}
+              </div>
+
               {/* HWID reset button in overview */}
-              <div style={{ marginTop: "1.5rem", paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+              <div style={{ marginTop: "1.25rem", paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
                 <div className="sp-expand-title" style={{ marginBottom: "0.65rem" }}>Danger Zone</div>
                 {!confirmHwid ? (
                   <button className="staff-action-btn staff-action-btn--red" onClick={() => setConfirmHwid(true)}>

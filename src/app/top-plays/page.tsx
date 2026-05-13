@@ -6,10 +6,12 @@ import { getTopScores, TopScore } from "@/lib/api";
 import { addCommas, parseMods, diffColor, modeToInt, timeAgo } from "@/lib/utils";
 import ModeSelector from "@/components/ModeSelector";
 import GradeImage from "@/components/GradeImage";
+import { useT } from "@/i18n";
 
 const TOTAL_PAGES = 10;
 
 export default function TopPlaysPage() {
+  const t = useT();
   const [mode, setMode] = useState("std");
   const [mods, setMods] = useState("vn");
   const [page, setPage] = useState(0);
@@ -39,8 +41,8 @@ export default function TopPlaysPage() {
         <div className="container-main">
           <div className="tp-head-inner">
             <div>
-              <h1 className="tp-title">Top PP Plays</h1>
-              <p className="tp-subtitle">Best scores on the server · ordered by pp</p>
+              <h1 className="tp-title">{t("topPlays.title")}</h1>
+              <p className="tp-subtitle">{t("topPlays.subtitle")}</p>
             </div>
             <ModeSelector mode={mode} mods={mods} onChange={handleModeChange} />
           </div>
@@ -51,9 +53,9 @@ export default function TopPlaysPage() {
         {/* Score list */}
         <div className="tp-list">
           {loading ? (
-            <div className="tp-placeholder">Loading…</div>
+            <div className="tp-loading">{t("topPlays.loading")}</div>
           ) : scores.length === 0 ? (
-            <div className="tp-placeholder">No scores found for this mode.</div>
+            <div className="tp-placeholder">{t("topPlays.noScores")}</div>
           ) : (
             scores.map((s, i) => {
               const rank = page * 10 + i + 1;
@@ -105,7 +107,7 @@ export default function TopPlaysPage() {
                       <div className="tp-score-detail">
                         <span>{addCommas(s.max_combo)}x</span>
                         <span className="tp-sep">·</span>
-                        <span>{s.nmiss > 0 ? `${s.nmiss} miss` : "FC"}</span>
+                        <span>{s.nmiss > 0 ? t("topPlays.miss", { n: s.nmiss }) : t("topPlays.fc")}</span>
                         <span className="tp-sep">·</span>
                         <span>{s.n300}/{s.n100}/{s.n50}/{s.nmiss}</span>
                         <span className="tp-sep">·</span>
@@ -140,7 +142,7 @@ export default function TopPlaysPage() {
             onClick={() => setPage((p) => Math.max(0, p - 1))}
             disabled={page === 0}
           >
-            ← Prev
+            {t("topPlays.prev")}
           </button>
           <div className="tp-page-nums">
             {Array.from({ length: TOTAL_PAGES }, (_, i) => (
@@ -158,7 +160,7 @@ export default function TopPlaysPage() {
             onClick={() => setPage((p) => Math.min(TOTAL_PAGES - 1, p + 1))}
             disabled={page === TOTAL_PAGES - 1}
           >
-            Next →
+            {t("topPlays.next")}
           </button>
         </div>
       </div>

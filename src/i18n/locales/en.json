@@ -1,0 +1,392 @@
+{
+  "nav": {
+    "home": "Home",
+    "leaderboard": "Leaderboard",
+    "beatmaps": "Beatmaps",
+    "clans": "Clans",
+    "contributors": "Contributors",
+    "more": "More",
+    "topPlays": "Top PP Plays",
+    "staff": "Staff",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "register": "Register",
+    "searchPlaceholder": "Search players...",
+    "closeSearch": "Close search",
+    "openSearch": "Search players",
+    "client": "Client"
+  },
+  "footer": {
+    "tagline": "an osu! private server",
+    "leaderboard": "leaderboard"
+  },
+  "home": {
+    "totalUsers": "total users",
+    "online": "online",
+    "tagline1": "A revival of the beloved osu!atoka private server.",
+    "tagline2": "We have a custom client made exclusively for this server.",
+    "tagline3": "Relaxed rules — some cheats are allowed.",
+    "topPpPlays": "Top PP Plays",
+    "staff": "Staff",
+    "topPlayers": "Top Players — osu! (Vanilla)",
+    "viewAll": "View all",
+    "recentScores": "Recent Scores",
+    "stats": {
+      "onlineRegistered": "Online / Registered",
+      "latestPlayer": "Latest Player",
+      "submittedScores": "Submitted Scores",
+      "restrictedPlayers": "Restricted Players",
+      "topScore": "Top Score",
+      "doneBy": "Done by {name}",
+      "totalPp": "Total PP"
+    }
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "countryPlaceholder": "Country (e.g. US)",
+    "loading": "Loading...",
+    "noPlayers": "No players to display.",
+    "prev": "Prev",
+    "next": "Next",
+    "page": "Page {n}",
+    "sort": {
+      "performance": "Performance",
+      "rankedScore": "Ranked Score",
+      "totalScore": "Total Score",
+      "accuracy": "Accuracy",
+      "playCount": "Play Count",
+      "playtime": "Playtime"
+    },
+    "columns": {
+      "rank": "#",
+      "player": "Player",
+      "pp": "PP",
+      "score": "Score",
+      "accuracy": "Accuracy",
+      "playcount": "Playcount",
+      "maxCombo": "Max Combo"
+    }
+  },
+  "topPlays": {
+    "title": "Top PP Plays",
+    "subtitle": "Best scores on the server · ordered by pp",
+    "loading": "Loading…",
+    "noScores": "No scores found for this mode.",
+    "prev": "← Prev",
+    "next": "Next →",
+    "fc": "FC",
+    "miss": "{n} miss",
+    "misses": "{n} misses"
+  },
+  "beatmaps": {
+    "searchPlaceholder": "type in keywords...",
+    "loading": "Loading...",
+    "noResults": "No beatmaps found.",
+    "results": "{n} beatmapsets",
+    "mappedBy": "mapped by {name}",
+    "prev": "‹ Prev",
+    "next": "Next ›",
+    "status": {
+      "label": "Status",
+      "any": "Any",
+      "ranked": "Ranked",
+      "approved": "Approved",
+      "loved": "Loved",
+      "qualified": "Qualified",
+      "pending": "Pending",
+      "graveyard": "Graveyard"
+    },
+    "mode": {
+      "label": "Mode",
+      "any": "Any"
+    },
+    "sort": {
+      "label": "Sort by",
+      "plays": "Plays",
+      "difficulty": "Difficulty",
+      "title": "Title",
+      "artist": "Artist"
+    }
+  },
+  "profile": {
+    "online": "Online",
+    "offline": "Offline",
+    "playing": "Playing",
+    "global": "Global",
+    "rank": {
+      "title": "Rank",
+      "global": "Global rank",
+      "country": "Country rank"
+    },
+    "stats": {
+      "title": "Statistics",
+      "pp": "PP",
+      "rankedScore": "Ranked score",
+      "totalScore": "Total score",
+      "maxCombo": "Max combo",
+      "playcount": "Playcount",
+      "playtime": "Playtime",
+      "accuracy": "Accuracy",
+      "totalHits": "Total hits",
+      "replaysWatched": "Replays watched",
+      "registered": "Registered"
+    },
+    "grades": "Grades",
+    "tabs": {
+      "best": "Best",
+      "recent": "Recent",
+      "mostPlayed": "Most Played"
+    },
+    "scores": {
+      "noScores": "No scores.",
+      "noRecent": "No recent scores.",
+      "noMostPlayed": "No maps played.",
+      "loadMore": "Load more",
+      "fc": "FC",
+      "miss": "{n} miss",
+      "misses": "{n} misses",
+      "timesPlayed": "{n}x"
+    },
+    "playcountGraph": {
+      "title": "Play History",
+      "subtitle": "Submitted scores · all time"
+    },
+    "userpage": {
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel",
+      "preview": "Preview",
+      "write": "Write",
+      "saving": "Saving…"
+    },
+    "comments": {
+      "title": "Comments",
+      "placeholder": "Write a comment…",
+      "post": "Post",
+      "delete": "Delete",
+      "noComments": "No comments yet.",
+      "posting": "Posting…"
+    }
+  },
+  "login": {
+    "title": "Sign in",
+    "noAccount": "Don't have an account?",
+    "register": "Register",
+    "username": "Username",
+    "password": "Password",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "forgotPassword": "Forgot my password",
+    "resetModal": {
+      "title": "Reset password",
+      "description": "Enter your username or email and we'll send you a link to reset your password.",
+      "usernameOrEmail": "Username or email",
+      "send": "Send reset link",
+      "sending": "Sending…",
+      "successTitle": "Check your email",
+      "successDesc": "If an account with that username or email exists, we've sent a password reset link to the associated address. It expires in 1 hour.",
+      "close": "Close"
+    }
+  },
+  "register": {
+    "title": "Create account",
+    "hasAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "submit": "Create account",
+    "submitting": "Creating account…"
+  },
+  "settings": {
+    "title": "Settings",
+    "backToHome": "Back to home",
+    "profile": {
+      "title": "Profile",
+      "newUsername": "New Username",
+      "newEmail": "New Email",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password",
+      "currentPassword": "Current Password",
+      "keepCurrent": "Leave blank to keep current",
+      "confirmPlaceholder": "Confirm new password",
+      "currentRequired": "Required to save changes",
+      "save": "Save Changes",
+      "saving": "Saving..."
+    },
+    "avatar": {
+      "title": "Avatar",
+      "imageFile": "Image File",
+      "imageHint": "(PNG, JPG, GIF — max 4 MB)",
+      "currentPassword": "Current Password",
+      "requiredToUpload": "Required to upload",
+      "upload": "Upload Avatar",
+      "uploading": "Uploading..."
+    },
+    "banner": {
+      "title": "Profile Banner",
+      "imageFile": "Image File",
+      "imageHint": "(PNG, JPG, WebP — max 8 MB, recommended 1400×320)",
+      "upload": "Upload Banner",
+      "uploading": "Uploading..."
+    }
+  },
+  "clans": {
+    "title": "Clan Leaderboard",
+    "loading": "Loading…",
+    "noClans": "No clans found.",
+    "members": "{n} members",
+    "prev": "‹ Prev",
+    "next": "Next ›",
+    "pageOf": "Page {n} of {total}",
+    "columns": {
+      "rank": "#",
+      "clan": "Clan",
+      "owner": "Owner",
+      "members": "Members",
+      "totalPp": "Total PP",
+      "pp": "PP",
+      "accuracy": "Accuracy",
+      "playcount": "Playcount",
+      "role": "Role",
+      "performance": "Performance",
+      "plays": "Plays"
+    }
+  },
+  "clanDetail": {
+    "notFound": "Clan not found.",
+    "loading": "Loading...",
+    "edit": "Edit",
+    "tabs": {
+      "info": "Info",
+      "leaderboard": "Leaderboard"
+    },
+    "info": {
+      "owner": "Owner",
+      "members": "Members",
+      "topPp": "Top PP",
+      "founded": "Founded"
+    },
+    "about": {
+      "title": "About",
+      "edit": "Edit",
+      "addDescription": "+ Add description",
+      "write": "Write",
+      "preview": "Preview",
+      "noDescriptionOwner": "No description yet. Click \"+ Add description\" to write one.",
+      "noDescription": "No description provided."
+    },
+    "editPanel": {
+      "title": "Edit Clan Name",
+      "name": "Name",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "invite": {
+      "title": "Invite Player",
+      "placeholder": "Username or ID",
+      "button": "Invite"
+    },
+    "noMembers": "No members found.",
+    "kick": "Kick",
+    "kickNo": "No"
+  },
+  "beatmap": {
+    "loading": "Loading beatmap...",
+    "notFound": "Beatmap not found.",
+    "mappedBy": "mapped by {name}",
+    "passes": "{n} passes",
+    "viewOnOsu": "View on osu.ppy.sh",
+    "difficulties": "Difficulties",
+    "noScores": "No scores on this difficulty yet.",
+    "stats": {
+      "length": "Length",
+      "bpm": "BPM",
+      "maxCombo": "Max Combo",
+      "circleSize": "Circle Size",
+      "hpDrain": "HP Drain",
+      "accuracy": "Accuracy",
+      "approachRate": "Approach Rate",
+      "starRating": "Star Rating"
+    },
+    "board": {
+      "title": "Leaderboard",
+      "loading": "Loading...",
+      "rank": "#",
+      "grade": "Grade",
+      "score": "Score",
+      "accuracy": "Accuracy",
+      "player": "Player",
+      "combo": "Combo",
+      "pp": "PP",
+      "time": "Time",
+      "mods": "Mods"
+    }
+  },
+  "contributors": {
+    "title": "Contributors",
+    "subtitle": "People who helped make Pawtoka happen — from development to translation and beyond.",
+    "noContributors": "No contributors listed yet.",
+    "admin": {
+      "open": "+ Add Contributor",
+      "close": "✕ Close",
+      "title": "Add a Contributor",
+      "add": "Add Contributor",
+      "adding": "Adding…",
+      "added": "Contributor added successfully!",
+      "error": "Something went wrong.",
+      "confirmDelete": "Confirm remove",
+      "cancelDelete": "Cancel",
+      "fields": {
+        "name": "Display Name",
+        "role": "Role / Contribution",
+        "osuId": "osu! User ID",
+        "github": "GitHub Username",
+        "bannerUrl": "Custom Banner URL",
+        "avatarUrl": "Custom Avatar URL",
+        "borderStyle": "Card Border Style",
+        "borderColor1": "Color 1",
+        "borderColor2": "Color 2",
+        "description": "Description",
+        "descriptionPlaceholder": "Short note about their contribution…"
+      }
+    }
+  },
+  "common": {
+    "loading": "Loading…",
+    "noData": "No data available.",
+    "prev": "Previous",
+    "next": "Next",
+    "page": "Page"
+  },
+  "welcome": {
+    "title": "Welcome, {name}!",
+    "sub": "Your account is ready. One last step — download the custom client to connect to pawinput.",
+    "downloadName": "osu!pawclient.rar",
+    "downloadSize": "~48 MB · Custom osu! client",
+    "downloadBtn": "Download",
+    "stepsTitle": "How to set up",
+    "step1": {
+      "title": "Download & extract the client",
+      "desc1": "Download the client with the button above. It's a",
+      "desc2": "file — make sure you have",
+      "desc3": "installed to extract it."
+    },
+    "step2": {
+      "title": "Run osu!.exe",
+      "desc": "Go to the extracted folder and open {exe}. You don't have to configure anything to connect to our server — it's already done."
+    },
+    "step3": {
+      "title": "Log in",
+      "desc": "Use the username and password you created your account with to sign in."
+    },
+    "step4": {
+      "title": "You're all set!",
+      "desc": "After having your settings properly done, add your beatmaps and have fun."
+    },
+    "note": "The client is a modified version of the official osu! client. Your skins and beatmaps will work as-is — with the sole exception of Aspire maps, which may be bugged due to the client being based on 2016.",
+    "profileBtn": "Go to my profile →",
+    "homeLink": "Back to home"
+  }
+}
